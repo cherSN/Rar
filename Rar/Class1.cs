@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rar
 {
-    public class Class1
+    public class Organiz
     {
     }
 }
