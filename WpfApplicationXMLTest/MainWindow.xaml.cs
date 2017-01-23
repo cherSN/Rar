@@ -30,6 +30,7 @@ namespace Rar
             InitializeComponent();
             CompanyList = new List<RarCompany>();
             File = new RarFile();
+ //           dataGridCompanies.ItemsSource = CompanyList;
         }
 
 
@@ -69,11 +70,17 @@ namespace Rar
                         }
 
                         CompanyList.Add(rc);
+                        //dataGridCompanies.Items.Add(rc);
                     }
-
-                    //переходим к следующему узлу
                     partner = partner.NextNode;
                 }
+            }
+            IList<RarCompany> rac = CompanyList.Select(p => p).ToList();
+            // dataGridCompanies.ItemsSource = rac;
+            foreach (RarCompany item in rac)
+            {
+                dataGridCompanies.Items.Add(item);
+
             }
         }
     }
