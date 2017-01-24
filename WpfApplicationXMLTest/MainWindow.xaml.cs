@@ -83,12 +83,12 @@ namespace Rar
                 //}
             }
             IList<RarCompany> rac = CompanyList.Select(p => p).ToList();
-            // dataGridCompanies.ItemsSource = rac;
-            foreach (RarCompany item in rac)
-            {
-                dataGridCompanies.Items.Add(item);
+            dataGridCompanies.ItemsSource = rac;
+            //foreach (RarCompany item in rac)
+            //{
+            //    dataGridCompanies.Items.Add(item);
 
-            }
+            //}
         }
     }
 }

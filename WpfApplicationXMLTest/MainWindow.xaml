@@ -20,7 +20,7 @@
                 <TabItem x:Name="tabCompanies" Header="Контрагенты">
                     <Grid Background="#FFE5E5E5">
                         <ToolBar x:Name="toolBar" Height="21" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="dataGridCompanies" Margin="0,21,0,0">
+                        <DataGrid x:Name="dataGridCompanies" Margin="0,21,0,0" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Path=Name}" ClipboardContentBinding="{x:Null}" Header="Наименование" Width="300"/>
                                 <DataGridTextColumn Binding="{Binding Path=INN}" ClipboardContentBinding="{x:Null}" Header="ИНН" Width="80"/>
