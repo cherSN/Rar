@@ -15,6 +15,7 @@ namespace Rar
 
     public class RarCompany
     {
+        public string ID { set; get; }
         public bool Producter { set; get; }
         public string Name { set; get; }
         public string INN { set; get; }

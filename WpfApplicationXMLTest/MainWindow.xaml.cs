@@ -45,6 +45,7 @@ namespace Rar
 
                 File.ProgramName = file.Attribute("НаимПрог").Value;
                 File.Version= file.Attribute("ВерсФорм").Value;
+                
                 File.DocumentDate  =  DateTime.Parse(file.Attribute("ДатаДок").Value);
 
                 XElement references = file.Element("Справочники");
@@ -62,6 +63,17 @@ namespace Rar
                         if (el.Name == "Контрагенты")
                         {
                             rc.Name = el.Attribute("П000000000007").Value;
+                            rc.ID = el.Attribute("ИдКонтр").Value;
+
+                            XElement  resident_foreignType = (XElement) el.FirstNode;
+                            if (resident_foreignType.Name == "Резидент")
+                            {
+                                XElement ul = resident_foreignType.Element("ЮЛ");
+                                rc.INN = ul.Attribute("П000000000009").Value;
+                                rc.KPP = ul.Attribute("П000000000010").Value;
+
+                            }
+
                         }
                         else
                         {
@@ -76,12 +88,12 @@ namespace Rar
                 }
             }
             IList<RarCompany> rac = CompanyList.Select(p => p).ToList();
-            // dataGridCompanies.ItemsSource = rac;
-            foreach (RarCompany item in rac)
-            {
-                dataGridCompanies.Items.Add(item);
+            dataGridCompanies.ItemsSource = rac;
+            //foreach (RarCompany item in rac)
+            //{
+            //    dataGridCompanies.Items.Add(item);
 
-            }
+            //}
         }
     }
 }
