@@ -41,39 +41,46 @@ namespace Rar
             {
                 
                 XDocument xdoc = XDocument.Load(openFileDialog.FileName);
-                XElement file = xdoc.Root;
+                XElement root = xdoc.Root;
 
-                File.ProgramName = file.Attribute("НаимПрог").Value;
-                File.Version= file.Attribute("ВерсФорм").Value;
-                File.DocumentDate  =  DateTime.Parse(file.Attribute("ДатаДок").Value);
+                File.ProgramName = root.Attribute("НаимПрог").Value;
+                File.Version= root.Attribute("ВерсФорм").Value;
+                File.DocumentDate  =  DateTime.Parse(root.Attribute("ДатаДок").Value);
 
-                XElement references = file.Element("Справочники");
-                XElement partners = references.Element("Контрагенты");
+                XElement references = root.Element("Справочники");
+                //XElement partners = root.Element("Справочники").Element("Контрагенты");
 
-                XNode partner = references.FirstNode;
-                while (partner != null)
+                //XNode partner = references.FirstNode;
+                foreach (XNode node in references.Elements("Контрагенты"))
                 {
-                    //проверяем, что текущий узел - это элемент
-                    if (partner.NodeType == System.Xml.XmlNodeType.Element)
-                    {
-                        XElement el = (XElement)partner;
-                        RarCompany rc = new RarCompany();
-
-                        if (el.Name == "Контрагенты")
-                        {
-                            rc.Name = el.Attribute("П000000000007").Value;
-                        }
-                        else
-                        {
-                            rc.Name = el.Attribute("П000000000004").Value;
-                            rc.Producter = true;
-                        }
-
-                        CompanyList.Add(rc);
-                        //dataGridCompanies.Items.Add(rc);
-                    }
-                    partner = partner.NextNode;
+                    RarCompany rc = new RarCompany();
+                    XElement el = (XElement)node;
+                    rc.Name = el.Attribute("П000000000007").Value;
                 }
+
+                //while (partner != null)
+                //{
+                //    //проверяем, что текущий узел - это элемент
+                //    if (partner.NodeType == System.Xml.XmlNodeType.Element)
+                //    {
+                //        XElement el = (XElement)partner;
+                //        RarCompany rc = new RarCompany();
+
+                //        if (el.Name == "Контрагенты")
+                //        {
+                //            rc.Name = el.Attribute("П000000000007").Value;
+                //        }
+                //        else
+                //        {
+                //            rc.Name = el.Attribute("П000000000004").Value;
+                //            rc.Producter = true;
+                //        }
+
+                //        CompanyList.Add(rc);
+                //        //dataGridCompanies.Items.Add(rc);
+                //    }
+                //    partner = partner.NextNode;
+                //}
             }
             IList<RarCompany> rac = CompanyList.Select(p => p).ToList();
             // dataGridCompanies.ItemsSource = rac;
