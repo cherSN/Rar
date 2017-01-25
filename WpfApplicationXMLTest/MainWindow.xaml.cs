@@ -184,7 +184,19 @@ namespace Rar
                 SetupProducters(references);
 
             }
-            IList<RarCompany> rac = CompanyList.Select(p => p).ToList();
+            IList<RarCompany> rac = CompanyList.Select(p => p).OrderBy(s=>s.Producter).ThenBy(s=> 
+            {
+                int r;
+                try
+                {
+                    r = Int32.Parse(s.ID);
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+                return r;
+                }).ToList();
             dataGridCompanies.ItemsSource = rac;
 
         }

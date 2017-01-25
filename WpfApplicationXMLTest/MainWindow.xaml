@@ -27,7 +27,7 @@
                                 <DataGridTextColumn Binding="{Binding Path=Name}" ClipboardContentBinding="{x:Null}" Header="Наименование" Width="300"/>
                                 <DataGridTextColumn Binding="{Binding Path=INN}" ClipboardContentBinding="{x:Null}" Header="ИНН" Width="80"/>
                                 <DataGridTextColumn Binding="{Binding Path=KPP}" ClipboardContentBinding="{x:Null}" Header="КПП" Width="80"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{Binding Path=Adress.AdressString}" Header="Адрес" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Path=Adress.AdressString}" ClipboardContentBinding="{x:Null}" Header="Адрес" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
