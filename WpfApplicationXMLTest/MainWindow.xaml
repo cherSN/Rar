@@ -20,12 +20,14 @@
                 <TabItem x:Name="tabCompanies" Header="Контрагенты">
                     <Grid Background="#FFE5E5E5">
                         <ToolBar x:Name="toolBar" Height="21" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="dataGridCompanies" Margin="0,21,0,0" AutoGenerateColumns="False">
+                        <DataGrid x:Name="dataGridCompanies" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Path=ID}" ClipboardContentBinding="{x:Null}" Header="ИД" Width="40"/>
+                                <DataGridCheckBoxColumn Binding="{Binding Path=Producter}" ClipboardContentBinding="{x:Null}" Header="ПИ"/>
                                 <DataGridTextColumn Binding="{Binding Path=Name}" ClipboardContentBinding="{x:Null}" Header="Наименование" Width="300"/>
                                 <DataGridTextColumn Binding="{Binding Path=INN}" ClipboardContentBinding="{x:Null}" Header="ИНН" Width="80"/>
                                 <DataGridTextColumn Binding="{Binding Path=KPP}" ClipboardContentBinding="{x:Null}" Header="КПП" Width="80"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Адрес" Width="*"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{Binding Path=Adress.AdressString}" Header="Адрес" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
 

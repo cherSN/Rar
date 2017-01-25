@@ -20,8 +20,15 @@ namespace Rar
         public string Name { set; get; }
         public string INN { set; get; }
         public string KPP { set; get; }
+        public string CounryID { set; get; }
         public RarAdress Adress { set; get; }
-        List<RarAdress> LicensesList;
+        public List<RarLicense> LicensesList { set; get; }
+
+        public RarCompany()
+        {
+            Adress = new RarAdress();
+            LicensesList = new List<RarLicense>();
+        }
     }
 
     public class RarAdress {
@@ -37,12 +44,23 @@ namespace Rar
         public string Litera { set; get; }
         public string Apartment { set; get; }
 
+        public bool StrictAdress { set; get; }
+        public string AdressString { set; get; }
+
+        public RarAdress() { }
+        public RarAdress(string adress)
+        {
+            StrictAdress = false;
+            AdressString = adress;
+        }
+
     }
 
     public class RarLicense
     {
-        public string Series { set; get; }
-        public string Number { set; get; }
+//        public RarCompany Owner { set; get; }
+        public string ID { set; get; }
+        public string SeriesNumber { set; get; }
         public DateTime DateFrom { set; get; }
         public DateTime DateTo { set; get; }
         public string Issuer { set; get; }
