@@ -198,6 +198,8 @@ namespace Rar
                 return r;
                 }).ToList();
             dataGridCompanies.ItemsSource = rac;
+            //comboBoxPartner.ItemsSource = CompanyList; //.Select(p => p.Name);
+            //listBoxPartner.ItemsSource = CompanyList;
 
         }
     }

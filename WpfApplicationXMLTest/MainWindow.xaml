@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow">
     <DockPanel>
         <Menu x:Name="menu" Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -14,12 +14,26 @@
         </Menu>
         <Grid Margin="0" DockPanel.Dock="Bottom">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="269*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="41*"/>
             </Grid.RowDefinitions>
-            <Label x:Name="labelPartner" Content="Контрагент" Grid.Row="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>            
-            <ComboBox x:Name="comboBox" Grid.Row="0" HorizontalAlignment="Left" Margin="90,0,0,0" VerticalAlignment="Center" Width="230" ItemsSource="{Binding CompanyList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"/>
-            
+            <Label x:Name="labelPartner" Content="Контрагент" Grid.Row="0" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Height="26" Width="72"/>
+            <ComboBox x:Name="comboBoxPartner" Grid.Row="0" ItemsSource="{Binding Path=CompanyList, RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" Margin="77,0,0,0" VerticalAlignment="Center" Height="22" HorizontalAlignment="Left" Width="300">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ShowGridLines="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" Grid.Column="0" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding INN}"  Grid.Column="1" Margin="5,0,0,0"/>
+                            <TextBlock Text="{Binding KPP}"  Grid.Column="2" Margin="5,0,0,0"/>
+                        </Grid>                        
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <TabControl x:Name="tabControl" Margin="0" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5"/>
@@ -48,10 +62,6 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-
-
-
         </Grid>
-
     </DockPanel>
 </Window>
