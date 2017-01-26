@@ -13,7 +13,14 @@
             </MenuItem>
         </Menu>
         <Grid Margin="0" DockPanel.Dock="Bottom">
-            <TabControl x:Name="tabControl" Margin="0,32,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="269*"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="labelPartner" Content="Контрагент" Grid.Row="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>            
+            <ComboBox x:Name="comboBox" Grid.Row="0" HorizontalAlignment="Left" Margin="90,0,0,0" VerticalAlignment="Center" Width="230" ItemsSource="{Binding CompanyList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"/>
+            
+            <TabControl x:Name="tabControl" Margin="0" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5"/>
                 </TabItem>
@@ -34,6 +41,8 @@
                     </Grid>
                 </TabItem>
             </TabControl>
+
+
 
         </Grid>
 
