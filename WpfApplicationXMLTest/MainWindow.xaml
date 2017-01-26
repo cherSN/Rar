@@ -18,7 +18,7 @@
                 <RowDefinition Height="41*"/>
             </Grid.RowDefinitions>
             <Label x:Name="labelPartner" Content="Контрагент" Grid.Row="0" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Height="26" Width="72"/>
-            <ComboBox x:Name="comboBoxPartner" Grid.Row="0" ItemsSource="{Binding Path=CompanyList, RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" Margin="77,0,0,0" VerticalAlignment="Center" Height="22" HorizontalAlignment="Left" Width="300">
+            <ComboBox x:Name="comboBoxPartner" Grid.Row="0" ItemsSource="{Binding Path=CompanyList, RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" Margin="77,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300" MaxDropDownHeight="900" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Grid ShowGridLines="True">
@@ -27,10 +27,10 @@
                                 <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="150" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}" Grid.Column="0" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Name}" Grid.Column="0" Margin="5,0,0,0"  TextWrapping="Wrap"/>
                             <TextBlock Text="{Binding INN}"  Grid.Column="1" Margin="5,0,0,0"/>
                             <TextBlock Text="{Binding KPP}"  Grid.Column="2" Margin="5,0,0,0"/>
-                        </Grid>                        
+                        </Grid>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
