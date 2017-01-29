@@ -25,14 +25,18 @@ namespace Rar
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<RarCompany> CompanyList { set; get; }
-        public RarFile File { set; get; }
+        //public List<RarCompany> CompanyList { set; get; }
+        //public RarFile File { set; get; }
+        public RarViewModel ViewModel { set; get; }
 
         public MainWindow()
         {
             InitializeComponent();
-            CompanyList = new List<RarCompany>();
-            File = new RarFile();
+            ViewModel = new RarViewModel();
+
+            DataContext = ViewModel;
+            //CompanyList = new List<RarCompany>();
+            //File = new RarFile();
  //           dataGridCompanies.ItemsSource = CompanyList;
         }
 
@@ -78,7 +82,7 @@ namespace Rar
                     }
                 }
 
-                CompanyList.Add(rc);
+                ViewModel.CompanyList.Add(rc);
             }
 
         }
@@ -94,7 +98,7 @@ namespace Rar
                 rc.INN =    (string)el.Attribute("П000000000005");
                 rc.KPP =    (string)el.Attribute("П000000000006");
 
-                CompanyList.Add(rc);
+                ViewModel.CompanyList.Add(rc);
             }
 
 
@@ -175,16 +179,16 @@ namespace Rar
                 if (!InDocumentIsValid(xdoc)) return;
 
                 XElement root = xdoc.Root;
-                File.ProgramName = root.Attribute("НаимПрог").Value;
-                File.Version= root.Attribute("ВерсФорм").Value;
-                File.DocumentDate  =  DateTime.Parse(root.Attribute("ДатаДок").Value);
+                ViewModel.ProgramName = root.Attribute("НаимПрог").Value;
+                ViewModel.Version= root.Attribute("ВерсФорм").Value;
+                ViewModel.DocumentDate  =  DateTime.Parse(root.Attribute("ДатаДок").Value);
 
                 XElement references = root.Element("Справочники");
                 SetupPartners(references);
                 SetupProducters(references);
 
             }
-            IList<RarCompany> rac = CompanyList.Select(p => p).OrderBy(s=>s.Producter).ThenBy(s=> 
+            IList<RarCompany> rac = ViewModel.CompanyList.Select(p => p).OrderBy(s=>s.Producter).ThenBy(s=> 
             {
                 int r;
                 try
@@ -197,9 +201,8 @@ namespace Rar
                 }
                 return r;
                 }).ToList();
-            dataGridCompanies.ItemsSource = rac;
-            //comboBoxPartner.ItemsSource = CompanyList; //.Select(p => p.Name);
-            //listBoxPartner.ItemsSource = CompanyList;
+            //dataGridCompanies.ItemsSource = rac;
+            comboBoxPartner.ItemsSource = ViewModel.CompanyList;
 
         }
     }
