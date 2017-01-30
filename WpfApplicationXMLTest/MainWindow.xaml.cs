@@ -25,8 +25,6 @@ namespace Rar
     /// </summary>
     public partial class MainWindow : Window
     {
-        //public List<RarCompany> CompanyList { set; get; }
-        //public RarFile File { set; get; }
         public RarViewModel ViewModel { set; get; }
 
         public MainWindow()
@@ -243,6 +241,7 @@ namespace Rar
                 SetupProducters(references);
 
             }
+
             IList<RarCompany> rac = ViewModel.CompanyList.Select(p => p).OrderBy(s=>s.Producter).ThenBy(s=> 
             {
                 int r;

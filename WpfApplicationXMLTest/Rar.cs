@@ -35,6 +35,13 @@ namespace Rar
         }
     }
 
+    public class RarSubdevision
+    {
+        public string Name { set; get; }
+        public string KPP { set; get; }
+        public RarAdress Adress { set; get; }
+    }
+
     public class RarOurCompany : RarCompany
     { 
         public RarFIO Director { set; get; }
@@ -42,11 +49,13 @@ namespace Rar
         public string Phone { set; get; }
         public string Email { set; get; }
         public string UnLisenseActivity { set; get; }
+        public List<RarSubdevision> SubdevisionList { set; get; }
 
         public RarOurCompany() : base()
         {
             Director = new RarFIO();
             Accountant = new RarFIO();
+            SubdevisionList = new List<RarSubdevision>();
         }
 
     }
