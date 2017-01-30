@@ -11,6 +11,7 @@ namespace Rar
     public class RarViewModel : INotifyPropertyChanged
     {
         private RarFile _RarFile;
+        private RarOurCompany _OurCompany;
 
         public DateTime DocumentDate
         {
@@ -76,6 +77,22 @@ namespace Rar
                 OnPropertyChanged("CorrectionNumber");
             }
         }
+
+        public RarOurCompany OurCompany
+        {
+            get
+            {
+                return _OurCompany;
+            }
+
+            set
+            {
+                _OurCompany = value;
+                OnPropertyChanged("OurCompany");
+
+            }
+        }
+
 
         public List<RarCompany> CompanyList
         {

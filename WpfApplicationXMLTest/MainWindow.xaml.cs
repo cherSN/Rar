@@ -39,8 +39,47 @@ namespace Rar
             //File = new RarFile();
  //           dataGridCompanies.ItemsSource = CompanyList;
         }
+        private void SetupFormData(XElement data)
+        {
+
+        }
         private void SetupOrganization(XElement organization)
         {
+            ViewModel.OurCompany.Director.Name =            (string) organization.Element("ОтветЛицо").Element("Руководитель").Element("Фамилия");
+            ViewModel.OurCompany.Director.Surname =         (string)organization.Element("ОтветЛицо").Element("Руководитель").Element("Имя");
+            ViewModel.OurCompany.Director.Middlename =      (string)organization.Element("ОтветЛицо").Element("Руководитель").Element("Отчество");
+
+            ViewModel.OurCompany.Accountant.Name =          (string)organization.Element("ОтветЛицо").Element("Главбух").Element("Фамилия");
+            ViewModel.OurCompany.Accountant.Surname =       (string)organization.Element("ОтветЛицо").Element("Главбух").Element("Имя");
+            ViewModel.OurCompany.Accountant.Middlename =    (string)organization.Element("ОтветЛицо").Element("Главбух").Element("Отчество");
+
+            ViewModel.OurCompany.Name = (string)organization.Element("Реквизиты").Attribute("Наим");
+            ViewModel.OurCompany.Phone = (string)organization.Element("Реквизиты").Attribute("ТелОрг");
+            ViewModel.OurCompany.Email = (string)organization.Element("Реквизиты").Attribute("EmailОтпр");
+            SetupAdress(ViewModel.OurCompany, organization.Element("Реквизиты").Element("АдрОрг"));
+            XElement company = organization.Element("Реквизиты").Element("ЮЛ");
+            if (company != null)
+            {
+                ViewModel.OurCompany.INN = (string)company.Attribute("ИННЮЛ");
+                ViewModel.OurCompany.KPP = (string)company.Attribute("КППЮЛ");
+            }
+            else
+            {
+                XElement individual = organization.Element("Реквизиты").Element("ФЛ");
+                if (individual != null)
+                    ViewModel.OurCompany.INN = (string)individual.Attribute("ИННФЛ");
+            }
+
+            XElement lactivity = organization.Element("Деятельность").Element("Лицензируемая");
+            if (lactivity!=null)
+            {
+                SetupLisences(ViewModel.OurCompany, lactivity);
+            }
+            else
+            {
+                ViewModel.OurCompany.UnLisenseActivity = (string)organization.Element("Деятельность").Element("Нелицензируемая").Attribute("ВидДеят");
+            }
+
 
         }
         private void SetupPartners(XElement references)
@@ -57,7 +96,7 @@ namespace Rar
                 if (resident != null)
                 {
                     rc.CounryID = "643";
-                    SetupLisences(rc, resident);
+                    SetupLisences(rc, resident.Element("Лицензии"));
                     XElement adress = resident.Element("П000000000008");
                     SetupAdress(rc, adress);
 
@@ -106,9 +145,9 @@ namespace Rar
 
 
         }
-        private void SetupLisences(RarCompany rc, XElement resident)
+        private void SetupLisences(RarCompany rc, XElement lisenses)
         {
-            foreach (XNode node in resident.Element("Лицензии").Elements("Лицензия"))
+            foreach (XNode node in lisenses.Elements("Лицензия"))
             {
                 RarLicense license = new RarLicense();
                 XElement el = (XElement)node;

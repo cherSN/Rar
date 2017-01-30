@@ -35,6 +35,38 @@ namespace Rar
         }
     }
 
+    public class RarOurCompany : RarCompany
+    { 
+        public RarFIO Director { set; get; }
+        public RarFIO Accountant { set; get; }
+        public string Phone { set; get; }
+        public string Email { set; get; }
+        public string UnLisenseActivity { set; get; }
+
+        public RarOurCompany() : base()
+        {
+            Director = new RarFIO();
+            Accountant = new RarFIO();
+        }
+
+    }
+
+    public class RarFIO
+    {
+        public string Name { set; get; }
+        public string Surname { set; get; }
+        public string Middlename { set; get; }
+
+        public RarFIO() { }
+        public RarFIO(string name, string surname, string middlename)
+        {
+            Name = name;
+            Surname = surname;
+            Middlename = middlename;
+        }
+
+    }
+
     public class RarAdress {
         public string CountryId { set; get; }
         public string PostCode { set; get; }
