@@ -39,7 +39,10 @@ namespace Rar
             //File = new RarFile();
  //           dataGridCompanies.ItemsSource = CompanyList;
         }
+        private void SetupOrganization(XElement organization)
+        {
 
+        }
         private void SetupPartners(XElement references)
         {
             foreach (XNode node in references.Elements("Контрагенты"))
@@ -179,9 +182,22 @@ namespace Rar
                 if (!InDocumentIsValid(xdoc)) return;
 
                 XElement root = xdoc.Root;
-                ViewModel.ProgramName = root.Attribute("НаимПрог").Value;
-                ViewModel.Version= root.Attribute("ВерсФорм").Value;
+                ViewModel.ProgramName =     (string) root.Attribute("НаимПрог");
+                ViewModel.Version=          (string) root.Attribute("ВерсФорм");
                 ViewModel.DocumentDate  =  DateTime.Parse(root.Attribute("ДатаДок").Value);
+
+                ViewModel.FormNumber =      (string) root.Element("ФормаОтч").Attribute("НомФорм");
+                ViewModel.ReportPeriod =    (string) root.Element("ФормаОтч").Attribute("ПризПериодОтч");
+                ViewModel.YearReport =      (string) root.Element("ФормаОтч").Attribute("ГодПериодОтч");
+
+                XElement corrections = root.Element("ФормаОтч").Element("Корректирующая");
+                if (corrections==null)
+                    ViewModel.CorrectionNumber = 0;
+                else
+                    ViewModel.CorrectionNumber = (int)corrections.Attribute("НомерКорр");
+
+
+                SetupOrganization(root.Element("Документ").Element("Организация"));
 
                 XElement references = root.Element("Справочники");
                 SetupPartners(references);
@@ -205,5 +221,6 @@ namespace Rar
             comboBoxPartner.ItemsSource = ViewModel.CompanyList;
 
         }
+
     }
 }

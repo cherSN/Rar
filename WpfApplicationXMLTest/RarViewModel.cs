@@ -39,20 +39,44 @@ namespace Rar
 
             }
         }
-        public string ProgramName
-        {
-            get
-            {
-                return _RarFile.ProgramName;
-            }
-
-            set
-            {
+        public string ProgramName     {
+            get  { return _RarFile.ProgramName; }
+            set  {
                 _RarFile.ProgramName = value;
                 OnPropertyChanged("ProgramName");
-
             }
         }
+        public string FormNumber  {
+            get  { return _RarFile.FormNumber;  }
+            set  {
+                _RarFile.FormNumber = value;
+                OnPropertyChanged("FormNumber");
+            }
+        }
+        public string ReportPeriod   {
+            get { return _RarFile.ReportPeriod; }
+            set  {
+                _RarFile.ReportPeriod = value;
+                OnPropertyChanged("ReportPeriod");
+            }
+        }
+        public string YearReport        {
+            get { return _RarFile.YearReport; }
+            set             {
+                _RarFile.YearReport = value;
+                OnPropertyChanged("YearReport");
+            }
+        }
+        public int CorrectionNumber
+        {
+            get { return _RarFile.CorrectionNumber; }
+            set
+            {
+                _RarFile.CorrectionNumber = value;
+                OnPropertyChanged("CorrectionNumber");
+            }
+        }
+
         public List<RarCompany> CompanyList
         {
             get
@@ -66,6 +90,7 @@ namespace Rar
                 OnPropertyChanged("CompanyList");
             }
         }
+
 
         private List<RarCompany> companyList;
 

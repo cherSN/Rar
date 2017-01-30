@@ -11,6 +11,10 @@ namespace Rar
         public DateTime DocumentDate { set; get; }
         public string Version { set; get; }
         public string ProgramName { set; get; }
+        public string FormNumber { set; get; }
+        public string ReportPeriod { set; get; }
+        public string YearReport { set; get; }
+        public int CorrectionNumber { set; get; }
     }
 
     public class RarCompany

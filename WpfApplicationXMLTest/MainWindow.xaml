@@ -14,8 +14,8 @@
         </Menu>
         <Grid Margin="0" DockPanel.Dock="Bottom">
             <Grid.RowDefinitions>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="417*"/>
+                <RowDefinition Height="91*"/>
+                <RowDefinition Height="393*"/>
             </Grid.RowDefinitions>
             <Label x:Name="labelPartner" Content="Контрагент:" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="72" Margin="0,10,0,0" Padding="5,0,0,0" VerticalContentAlignment="Center"/>
 
@@ -35,9 +35,26 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TabControl x:Name="tabControl" Margin="0,0,0,0.5" Grid.Row="1">
+
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="552,12,0,0"  Text="{Binding DocumentDate, StringFormat=\{0:d\}}" VerticalAlignment="Top" Width="120" Grid.Row="0"/>
+            <Label Content="Дата:" HorizontalAlignment="Left" Margin="509,12,0,55" VerticalAlignment="Center" Height="24" VerticalContentAlignment="Center" Padding="0" Width="28" Grid.Row="0"/>
+            <Label Content="Версия:" HorizontalAlignment="Left" Margin="0,39,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.004,0.449" Height="23" Padding="5,0,0,0" VerticalContentAlignment="Center" Width="46"  Grid.Row="0"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="77,39,0,0"  Text="{Binding Version}" VerticalAlignment="Top" Width="45"  Grid.Row="0"/>
+            <Label Content="Программа:" HorizontalAlignment="Left" Margin="133,37,0,0" VerticalAlignment="Top" Height="23" Padding="0" VerticalContentAlignment="Center" Width="66"  Grid.Row="0"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="214,37,0,0"  Text="{Binding ProgramName}" VerticalAlignment="Top" Width="458"  Grid.Row="0"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="77,68,0,0" TextWrapping="Wrap" Text="{Binding FormNumber}" VerticalAlignment="Top" Width="27"  Grid.Row="0"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="187,69,0,0" TextWrapping="Wrap" Text="{Binding ReportPeriod}" VerticalAlignment="Top" Width="59"  Grid.Row="0"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="305,69,0,0" TextWrapping="Wrap" Text="{Binding YearReport}" VerticalAlignment="Top" Width="76"  Grid.Row="0"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="520,68,0,0" TextWrapping="Wrap" Text="{Binding CorrectionNumber}" VerticalAlignment="Top" Width="76"  Grid.Row="0"/>
+            <Label Content="№ формы:" HorizontalAlignment="Left" Height="24" Margin="10,68,0,0" VerticalAlignment="Top" Width="72" Grid.Row="0"/>
+            <Label Content="Период:" HorizontalAlignment="Left" Height="24" Margin="127,68,0,0" VerticalAlignment="Top" Width="72" Grid.Row="0"/>
+            <Label Content="Год:" HorizontalAlignment="Left" Height="24" Margin="264,68,0,0" VerticalAlignment="Top" Width="36" Grid.Row="0"/>
+            <Label Content="Корректировка:" HorizontalAlignment="Left" Height="24" Margin="399,69,0,0" VerticalAlignment="Top" Width="101" Grid.Row="0"/>
+            <TabControl x:Name="tabControl" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid Background="#FFE5E5E5">
+                        <DataGrid x:Name="dataGridF6" Margin="10,10,0,0"/>
+                    </Grid>
                 </TabItem>
                 <TabItem x:Name="tabCompanies" Header="Контрагенты">
                     <Grid Background="#FFE5E5E5">
@@ -63,13 +80,6 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TextBox x:Name="tbDocumentDate" HorizontalAlignment="Left" Height="23" Margin="552,12,0,0"  Text="{Binding DocumentDate, StringFormat=\{0:d\}}" VerticalAlignment="Top" Width="120"/>
-            <Label x:Name="label" Content="Дата:" HorizontalAlignment="Left" Margin="509,11,0,36" VerticalAlignment="Center" Height="23" VerticalContentAlignment="Center" Padding="0"/>
-            <Label x:Name="label1" Content="Версия:" HorizontalAlignment="Left" Margin="0,39,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.004,0.449" Height="23" Padding="5,0,0,0" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="tbVersion" HorizontalAlignment="Left" Height="23" Margin="77,39,0,0"  Text="{Binding Version}" VerticalAlignment="Top" Width="45"/>
-            <Label x:Name="label2" Content="Программа:" HorizontalAlignment="Left" Margin="133,37,0,0" VerticalAlignment="Top" Height="23" Padding="0" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="tbProgramName" HorizontalAlignment="Left" Height="23" Margin="214,37,0,0"  Text="{Binding ProgramName}" VerticalAlignment="Top" Width="458"/>
-
         </Grid>
     </DockPanel>
 </Window>
