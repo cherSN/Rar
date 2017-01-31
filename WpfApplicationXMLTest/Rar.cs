@@ -40,6 +40,12 @@ namespace Rar
         public string Name { set; get; }
         public string KPP { set; get; }
         public RarAdress Adress { set; get; }
+        public bool SalePresented { set; get; }
+        public bool ReturnPresented { set; get; } 
+        public RarSubdevision()
+        {
+            Adress = new RarAdress();
+        }
     }
 
     public class RarOurCompany : RarCompany
@@ -110,5 +116,20 @@ namespace Rar
         public DateTime DateTo { set; get; }
         public string Issuer { set; get; }
     }
+
+    public class RarTurnoverData
+    {
+        public RarSubdevision Subdevision { set; get; }
+        public string ProductionSortID {set; get;}
+        public RarCompany Producter { set; get; }
+        public RarCompany Buyer { set; get; }
+        public RarLicense License { set; get; }
+        public DateTime NotificationDate { set; get; }
+        public string NotificationNumber { set; get; }
+        public double NotificationTurnover { set; get;}
+        public DateTime DocumentDate { set; get; }
+        public string DocumentNumber { set; get; }
+        public string CustomsDeclarationNumber { set; get; }
+        public double Turnover { set; get; }
 }
 

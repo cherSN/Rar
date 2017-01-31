@@ -37,8 +37,42 @@ namespace Rar
             //File = new RarFile();
  //           dataGridCompanies.ItemsSource = CompanyList;
         }
-        private void SetupFormData(XElement data)
+        private void SetupFormData(XElement turnoverdata)
         {
+            RarSubdevision subdevision = new RarSubdevision();
+            subdevision.Name = (string)turnoverdata.Attribute("Наим");
+            subdevision.KPP = (string)turnoverdata.Attribute("КППЮЛ");
+            subdevision.SalePresented = (bool)turnoverdata.Attribute("НаличиеПоставки");
+            subdevision.ReturnPresented = (bool)turnoverdata.Attribute("НаличиеВозврата");
+            subdevision.Adress = SetupAdress(turnoverdata.Element("АдрОрг"));
+            ViewModel.OurCompany.SubdevisionList.Add(subdevision);
+            foreach (XNode node in turnoverdata.Elements("Оборот"))
+            {
+                XElement el = (XElement)node;
+                RarTurnoverData data = new RarTurnoverData();
+                data.Subdevision = subdevision;
+                data.ProductionSortID =     (string)el.Attribute("П000000000003");
+                string producterID=         (string)el.Element("СведПроизвИмпорт").Attribute("ИдПроизвИмп");
+                data.Producter = ViewModel.CompanyList.Where(p => p.Producter && p.ID == producterID).First();
+                string buyerID =            (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдПолучателя");
+                data.Buyer = ViewModel.CompanyList.Where(p => !p.Producter && p.ID == producterID).First();
+                string licenseID =          (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдЛицензии");
+                data.License = ViewModel.CompanyList.Where(p => !p.Producter).Select(p => p.LicensesList.Where(p => p.ID == licenseID).First()).First();  
+
+                data.NotificationDate=      (DateTime)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015");
+                data.NotificationNumber =   (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000016");
+                data.NotificationTurnover = (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000017");
+                data.DocumentDate =         (DateTime)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000018");
+                data.DocumentNumber =       (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000019");
+                data.CustomsDeclarationNumber = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000020");
+                data.Turnover =             (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000021");
+
+
+
+            }
+
+
+
 
         }
         private void SetupOrganization(XElement organization)
@@ -96,7 +130,7 @@ namespace Rar
                     rc.CounryID = "643";
                     SetupLisences(rc, resident.Element("Лицензии"));
                     XElement adress = resident.Element("П000000000008");
-                    SetupAdress(rc, adress);
+                    rc.Adress= SetupAdress(adress);
 
                     XElement company = resident.Element("ЮЛ");
                     if (company != null)
@@ -158,7 +192,7 @@ namespace Rar
 
             }
         }
-        private void SetupAdress(RarCompany rc, XElement adress)
+        private RarAdress SetupAdress(XElement adress)
         {
             RarAdress adr = new RarAdress();
             adr.StrictAdress = true;
@@ -185,7 +219,7 @@ namespace Rar
                 adr.Block + "," +
                 adr.Litera + "," +
                 adr.Apartment + ",";
-            rc.Adress = adr;
+            return adr;
         }
         private bool InDocumentIsValid(XDocument xdoc)
         {
@@ -239,6 +273,7 @@ namespace Rar
                 XElement references = root.Element("Справочники");
                 SetupPartners(references);
                 SetupProducters(references);
+                SetupFormData(root.Element("Документ").Element("ОбъемОборота"));
 
             }
 
