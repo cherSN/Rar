@@ -57,7 +57,9 @@ namespace Rar
                 string buyerID =            (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдПолучателя");
                 data.Buyer = ViewModel.CompanyList.Where(p => !p.Producter && p.ID == producterID).First();
                 string licenseID =          (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдЛицензии");
-                data.License = ViewModel.CompanyList.Where(p => !p.Producter).Select(p => p.LicensesList.Where(p => p.ID == licenseID).First()).First();  
+                data.License = ViewModel.CompanyList.Where(p => !p.Producter).Select(
+                    p =>  p.LicensesList.Where(p => p.ID == licenseID).First()
+                    ).First();  
 
                 data.NotificationDate=      (DateTime)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015");
                 data.NotificationNumber =   (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000016");
@@ -66,13 +68,8 @@ namespace Rar
                 data.DocumentNumber =       (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000019");
                 data.CustomsDeclarationNumber = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000020");
                 data.Turnover =             (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000021");
-
-
-
+                ViewModel.TurnoverDataList.Add(data);
             }
-
-
-
 
         }
         private void SetupOrganization(XElement organization)

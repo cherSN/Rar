@@ -108,6 +108,22 @@ namespace Rar
             }
         }
 
+        public List<RarTurnoverData> TurnoverDataList
+        {
+            get
+            {
+                return turnoverDataList;
+            }
+
+            set
+            {
+                turnoverDataList = value;
+                OnPropertyChanged("TurnoverDataList");
+
+            }
+        }
+
+        private List<RarTurnoverData> turnoverDataList;
 
         private List<RarCompany> companyList;
 
@@ -115,7 +131,7 @@ namespace Rar
         {
             _RarFile = new RarFile();
             CompanyList = new List<RarCompany>();
-
+            TurnoverDataList = new List<RarTurnoverData>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
