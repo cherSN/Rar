@@ -237,8 +237,8 @@ namespace Rar.ViewModel
                 ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
 
                 TurnoverDataListCollectionView = new ListCollectionView(TurnoverDataList);
-                //TurnoverDataListCollectionView.GroupDescriptions.Add(new PropertyGroupDescription("AlcoCode"));
-                TurnoverDataListCollectionView.SortDescriptions.Add(new SortDescription("AlcoCode", ListSortDirection.Ascending));
+                TurnoverDataListCollectionView.GroupDescriptions.Add(new PropertyGroupDescription("AlcoCode"));
+                TurnoverDataListCollectionView.SortDescriptions.Add(new SortDescription("DocumentNumber", ListSortDirection.Ascending));
                 TurnoverDataListCollectionView.Filter = viewSource_Filter;
 
                 UpdateAll();
