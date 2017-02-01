@@ -5,20 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rar"
         mc:Ignorable="d"
-        Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Language="ru-RU">
     <DockPanel>
         <Menu x:Name="menu" Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Открыть" HorizontalAlignment="Left" Width="145" Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
-        <Grid Margin="0" DockPanel.Dock="Bottom">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="91*"/>
-                <RowDefinition Height="393*"/>
-            </Grid.RowDefinitions>
+        <StackPanel  DockPanel.Dock="Bottom">
             <StackPanel>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#FFF5A9A9">
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <Label x:Name="labelPartner" Content="Контрагент:" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" Padding="5,0,0,0" VerticalContentAlignment="Center"/>
                     <ComboBox x:Name="comboBoxPartner" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" MaxDropDownHeight="500" MinWidth="400"  >
                         <ComboBox.ItemTemplate>
@@ -39,13 +35,13 @@
                     <Label Content="Дата:" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="0" />
                     <TextBox HorizontalAlignment="Left" Margin="5,5,0,0"  Text="{Binding DocumentDate, StringFormat=\{0:d\}}" VerticalAlignment="Top" MinWidth="80"/>
                 </StackPanel>
-                <StackPanel  Grid.Row="0" Orientation="Horizontal" Background="#FF88EDF7">
+                <StackPanel  Grid.Row="0" Orientation="Horizontal">
                     <Label Content="Версия:" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Padding="0,0,0,0" />
                     <TextBox HorizontalAlignment="Left" Margin="0,0,0,0"  Text="{Binding Version}" VerticalAlignment="Top"  MinWidth="40"/>
                     <Label Content="Программа:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" />
                     <TextBox HorizontalAlignment="Left" Margin="0,0,0,0"  Text="{Binding ProgramName}" VerticalAlignment="Top" MinWidth="400"/>
                 </StackPanel>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#FF8EF577">
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <Label Content="№ формы:" HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top"/>
                     <TextBox HorizontalAlignment="Left" Margin="0,0,0,0"  Text="{Binding FormNumber}" VerticalAlignment="Top" MinWidth="60"/>
                     <Label Content="Период:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
@@ -59,43 +55,50 @@
             <TabControl x:Name="tabControl" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5">
-                        <DataGrid x:Name="dataGridF6" Language="ru-RU" Margin="10,10,0,0" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid x:Name="dataGridF6"  Margin="0,0,0,0" AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
-                                <DataGridComboBoxColumn  Header="Подразделение" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Subdevision}" TextBinding="{Binding Path=Subdevision.Name}"/>
                                 <!--<DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Производитель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Producter}" TextBinding="{x:Null}"/>
                                 <DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Покупатель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Buyer}" TextBinding="{x:Null}"/>-->
-
-                                <DataGridTextColumn Binding="{Binding Path=Producter.Name}" Header="Производитель" ClipboardContentBinding="{x:Null}"/>
-                                <DataGridTextColumn Binding="{Binding Path=Buyer.Name}" Header="Покупатель" ClipboardContentBinding="{x:Null}"/>
-                                <DataGridTextColumn Binding="{Binding Path=DocumentDate , StringFormat=\{0:d\}}" Header="Дата" ClipboardContentBinding="{x:Null}"/>
-                                <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док" ClipboardContentBinding="{x:Null}"/>
-                                <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ClipboardContentBinding="{x:Null}" >
+                                <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                                <DataGridTextColumn Binding="{Binding Path=ProductionSortID}" Header="Код" ClipboardContentBinding="{x:Null}" MinWidth="40"/>
+                                <DataGridTextColumn Binding="{Binding Path=Producter.Name}" Header="Производитель" ClipboardContentBinding="{x:Null}" MinWidth="100">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Path=Producter.INN}" Header="ИНН Произв" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                                <DataGridTextColumn Binding="{Binding Path=Producter.KPP}" Header="КПП Произв" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                                <DataGridTextColumn Binding="{Binding Path=Buyer.Name}" Header="Покупатель" ClipboardContentBinding="{x:Null}" MinWidth="100">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
+                                            <Setter Property="TextBlock.Margin" Value="5,0,5,0" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>                                    
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Path=Buyer.INN}" Header="ИНН Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                                <DataGridTextColumn Binding="{Binding Path=Buyer.KPP}" Header="КПП Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>                                
+                                <DataGridTextColumn Binding="{Binding Path=DocumentDate , StringFormat=\{0:d\}}" Header="Дата" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                                <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                                <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ClipboardContentBinding="{x:Null}" MinWidth="70" >
                                     <DataGridTextColumn.ElementStyle>
                                         <Style>
                                             <Setter Property="TextBlock.TextAlignment" Value="Right" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                                    
-                           
+                                <DataGridComboBoxColumn  Header="Box" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Subdevision}" TextBinding="{Binding Path=Subdevision.Name}"/>
 
                             </DataGrid.Columns>
-                            <!--<DataGrid.RowDetailsTemplate>
-                                <DataTemplate>
-                                    <Border Margin="10" Padding="10" BorderBrush="SteelBlue" BorderThickness="2" CornerRadius="5">
-                                        <TextBlock Text="{Binding Path=Subdevision.Name}" TextWrapping="Wrap" FontSize="10" MaxWidth="350"></TextBlock>
-                                        
-                                    </Border>                                
-                                </DataTemplate>
-                            </DataGrid.RowDetailsTemplate>-->
-
                         </DataGrid>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabCompanies" Header="Контрагенты">
                     <Grid Background="#FFE5E5E5">
                         <ToolBar x:Name="toolBar" Height="21" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="dataGridCompanies" ItemsSource="{Binding CompanyList}" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="LightGray" AlternatingRowBackground="White">
+                        <DataGrid x:Name="dataGridCompanies" ItemsSource="{Binding CompanyList}" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Path=ID}" ClipboardContentBinding="{x:Null}" Header="ИД" Width="40"/>
                                 <DataGridCheckBoxColumn Binding="{Binding Path=Producter}" ClipboardContentBinding="{x:Null}" Header="ПИ"/>
@@ -112,10 +115,9 @@
                                 </DataTemplate>
                             </DataGrid.RowDetailsTemplate>-->
                         </DataGrid>
-
                     </Grid>
                 </TabItem>
             </TabControl>
-        </Grid>
+        </StackPanel>
     </DockPanel>
 </Window>
