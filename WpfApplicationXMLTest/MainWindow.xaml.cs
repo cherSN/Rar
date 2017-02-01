@@ -57,7 +57,17 @@ namespace Rar
                 string buyerID =            (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдПолучателя");
                 data.Buyer = ViewModel.CompanyList.Where(p => !p.Producter && p.ID == producterID).First();
                 string licenseID =          (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдЛицензии");
+
                 List<RarCompany> buyers= ViewModel.CompanyList.Where(p => !p.Producter).ToList();
+                RarLicense l = null;
+                foreach (RarCompany item in buyers)
+                {
+                   l= item.LicensesList.Where(s => s.ID == licenseID).FirstOrDefault();
+                    if (l!=null) break;
+                }
+
+                if (l != null)
+                    data.License = l;
                 //List<RarLicense> lss = buyers.Select(p => p.LicensesList.Where(s => s.ID == licenseID);
 
                 //data.License = buyers.Select(p => p.LicensesList.Where(s => s.ID == licenseID).First();
@@ -304,7 +314,7 @@ namespace Rar
                 }).ToList();
             //dataGridCompanies.ItemsSource = rac;
             comboBoxPartner.ItemsSource = ViewModel.CompanyList;
-
+            dataGridF6.ItemsSource = ViewModel.TurnoverDataList;
         }
 
     }
