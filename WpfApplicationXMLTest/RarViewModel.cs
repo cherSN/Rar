@@ -131,6 +131,7 @@ namespace Rar
         {
             _RarFile = new RarFile();
             CompanyList = new List<RarCompany>();
+            OurCompany = new RarOurCompany();
             TurnoverDataList = new List<RarTurnoverData>();
         }
 

@@ -57,16 +57,20 @@ namespace Rar
                 string buyerID =            (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдПолучателя");
                 data.Buyer = ViewModel.CompanyList.Where(p => !p.Producter && p.ID == producterID).First();
                 string licenseID =          (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдЛицензии");
-                data.License = ViewModel.CompanyList.Where(p => !p.Producter).Select(
-                    p =>  p.LicensesList.Where(p => p.ID == licenseID).First()
-                    ).First();  
+                List<RarCompany> buyers= ViewModel.CompanyList.Where(p => !p.Producter).ToList();
+                //List<RarLicense> lss = buyers.Select(p => p.LicensesList.Where(s => s.ID == licenseID);
 
-                data.NotificationDate=      (DateTime)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015");
-                data.NotificationNumber =   (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000016");
-                data.NotificationTurnover = (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000017");
-                data.DocumentDate =         (DateTime)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000018");
+                //data.License = buyers.Select(p => p.LicensesList.Where(s => s.ID == licenseID).First();
+
+                //if (el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015") != null)
+                //    data.NotificationDate = DateTime.Parse(el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015").Value);
+
+                //data.NotificationDate=      DateTime.Parse(el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015").Value);
+                //data.NotificationNumber =   (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000016");
+                //data.NotificationTurnover = (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000017");
+                data.DocumentDate =         DateTime.Parse(el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000018").Value);
                 data.DocumentNumber =       (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000019");
-                data.CustomsDeclarationNumber = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000020");
+                //data.CustomsDeclarationNumber = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000020");
                 data.Turnover =             (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000021");
                 ViewModel.TurnoverDataList.Add(data);
             }
@@ -85,7 +89,7 @@ namespace Rar
             ViewModel.OurCompany.Name = (string)organization.Element("Реквизиты").Attribute("Наим");
             ViewModel.OurCompany.Phone = (string)organization.Element("Реквизиты").Attribute("ТелОрг");
             ViewModel.OurCompany.Email = (string)organization.Element("Реквизиты").Attribute("EmailОтпр");
-            SetupAdress(ViewModel.OurCompany, organization.Element("Реквизиты").Element("АдрОрг"));
+            ViewModel.OurCompany.Adress= SetupAdress(organization.Element("Реквизиты").Element("АдрОрг"));
             XElement company = organization.Element("Реквизиты").Element("ЮЛ");
             if (company != null)
             {
@@ -102,7 +106,18 @@ namespace Rar
             XElement lactivity = organization.Element("Деятельность").Element("Лицензируемая");
             if (lactivity!=null)
             {
-                SetupLisences(ViewModel.OurCompany, lactivity);
+                foreach (XNode node in lactivity.Elements("Лицензия"))
+                {
+                    RarLicense license = new RarLicense();
+                    XElement el = (XElement)node;
+                    //license.ID = "";
+                    license.SeriesNumber = (string)el.Attribute("СерНомЛиц");
+                    license.DateFrom = DateTime.Parse(el.Attribute("ДатаНачЛиц").Value);
+                    license.DateTo = DateTime.Parse(el.Attribute("ДатаОконЛиц").Value);
+                    license.BusinesType = (string)el.Attribute("ВидДеят");
+                    ViewModel.OurCompany.LicensesList.Add(license);
+
+                }
             }
             else
             {
@@ -180,11 +195,11 @@ namespace Rar
             {
                 RarLicense license = new RarLicense();
                 XElement el = (XElement)node;
-                license.ID = el.Attribute("ИдЛицензии").Value;
-                license.SeriesNumber= el.Attribute("П000000000011").Value;
+                license.ID = (string)el.Attribute("ИдЛицензии");
+                license.SeriesNumber= (string)el.Attribute("П000000000011");
                 license.DateFrom = DateTime.Parse(el.Attribute("П000000000012").Value);
                 license.DateTo= DateTime.Parse(el.Attribute("П000000000013").Value);
-                license.Issuer= el.Attribute("П000000000014").Value;
+                license.Issuer= (string)el.Attribute("П000000000014");
                 rc.LicensesList.Add(license);
 
             }
