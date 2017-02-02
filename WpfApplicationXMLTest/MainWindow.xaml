@@ -13,45 +13,47 @@
             </MenuItem>
         </Menu>
         <StackPanel  DockPanel.Dock="Bottom">
-            <StackPanel>
-                <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <Label x:Name="labelPartner" Content="Контрагент:" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" Padding="5,0,0,0" VerticalContentAlignment="Center"/>
-                    <ComboBox x:Name="comboBoxPartner" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" MaxDropDownHeight="500" MinWidth="400"  >
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid ShowGridLines="False">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="220" />
-                                        <ColumnDefinition Width="80" />
-                                        <ColumnDefinition Width="80" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Name}" Grid.Column="0" Margin="5,0,0,0"  TextWrapping="Wrap" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding INN}"  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding KPP}"  Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Label Content="Дата:" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="0" />
-                    <TextBox HorizontalAlignment="Left" Margin="5,5,0,0"  Text="{Binding DocumentDate, StringFormat=\{0:d\}}" VerticalAlignment="Top" MinWidth="80"/>
+            <Border BorderThickness="1" CornerRadius="5" BorderBrush="Black" Padding="5" Margin="5" >
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label x:Name="labelPartner" Content="Контрагент:" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"  Padding="3,0,0,0" VerticalContentAlignment="Center" Margin="3"/>
+                        <ComboBox x:Name="comboBoxPartner"  VerticalAlignment="Center" HorizontalAlignment="Left" MaxDropDownHeight="500" MinWidth="400" Margin="3"  >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ShowGridLines="False">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="220" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="80" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Name}" Grid.Column="0" Margin="5,0,0,0"  TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding INN}"  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding KPP}"  Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Label Content="Дата:" HorizontalAlignment="Left"  VerticalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="3" />
+                        <TextBox HorizontalAlignment="Left"   Text="{Binding DocumentDate, StringFormat=\{0:d\}}" VerticalAlignment="Center" MinWidth="80" Margin="3"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal">
+                    <Label Content="Версия:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" Padding="3,0,0,0" />
+                    <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding Version}" VerticalAlignment="Center"  MinWidth="40"/>
+                    <Label Content="Программа:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding ProgramName}" VerticalAlignment="Center" MinWidth="400"/>
                 </StackPanel>
-                <StackPanel  Grid.Row="0" Orientation="Horizontal">
-                    <Label Content="Версия:" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Padding="0,0,0,0" />
-                    <TextBox HorizontalAlignment="Left" Margin="0,0,0,0"  Text="{Binding Version}" VerticalAlignment="Top"  MinWidth="40"/>
-                    <Label Content="Программа:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" />
-                    <TextBox HorizontalAlignment="Left" Margin="0,0,0,0"  Text="{Binding ProgramName}" VerticalAlignment="Top" MinWidth="400"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Форма №:" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Center" Padding="3,0,0,0"/>
+                    <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding FormNumber}" VerticalAlignment="Center" MinWidth="60"/>
+                    <Label Content="Период:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center"/>
+                    <TextBox HorizontalAlignment="Left"  Margin="3" Text="{Binding ReportPeriod}" VerticalAlignment="Center" MinWidth="60"/>
+                    <Label Content="Год:" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Center"/>
+                    <TextBox HorizontalAlignment="Left"  Margin="3" Text="{Binding YearReport}" VerticalAlignment="Center" MinWidth="60"/>
+                    <Label Content="Корректировка:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox HorizontalAlignment="Left"  Margin="3"  Text="{Binding CorrectionNumber}" VerticalAlignment="Center" MinWidth="60"/>
                 </StackPanel>
-                <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <Label Content="№ формы:" HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox HorizontalAlignment="Left" Margin="0,0,0,0"  Text="{Binding FormNumber}" VerticalAlignment="Top" MinWidth="60"/>
-                    <Label Content="Период:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox HorizontalAlignment="Left"  Margin="0,0,0,0" Text="{Binding ReportPeriod}" VerticalAlignment="Top" MinWidth="60"/>
-                    <Label Content="Год:" HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox HorizontalAlignment="Left"  Margin="0,0,0,0" Text="{Binding YearReport}" VerticalAlignment="Top" MinWidth="60"/>
-                    <Label Content="Корректировка:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" />
-                    <TextBox HorizontalAlignment="Left"  Margin="0,0,0,0"  Text="{Binding CorrectionNumber}" VerticalAlignment="Top" MinWidth="60"/>
                 </StackPanel>
-            </StackPanel>
+            </Border>
             <TabControl x:Name="tabControl" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5">
@@ -76,10 +78,10 @@
                                             <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
                                             <Setter Property="TextBlock.Margin" Value="5,0,5,0" />
                                         </Style>
-                                    </DataGridTextColumn.ElementStyle>                                    
+                                    </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Path=Buyer.INN}" Header="ИНН Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                <DataGridTextColumn Binding="{Binding Path=Buyer.KPP}" Header="КПП Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>                                
+                                <DataGridTextColumn Binding="{Binding Path=Buyer.KPP}" Header="КПП Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
                                 <DataGridTextColumn Binding="{Binding Path=DocumentDate , StringFormat=\{0:d\}}" Header="Дата" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
                                 <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
                                 <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ClipboardContentBinding="{x:Null}" MinWidth="70" >
