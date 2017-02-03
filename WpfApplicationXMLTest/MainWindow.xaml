@@ -105,7 +105,7 @@
                                         <DataTemplate>
                                             <ComboBox x:Name="cbTest" Height="22" 
                                                       SelectedItem="{Binding Buyer}" 
-                                                      ItemsSource="{Binding CompanyList, Source={StaticResource RarViewModel}}" IsDropDownOpen="False" IsEditable="False"/>
+                                                      ItemsSource="{Binding CompanyList, Source={StaticResource RarViewModel}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
