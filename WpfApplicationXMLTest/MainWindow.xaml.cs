@@ -315,6 +315,7 @@ namespace Rar
             //dataGridCompanies.ItemsSource = rac;
             comboBoxPartner.ItemsSource = ViewModel.CompanyList;
             dataGridF6.ItemsSource = ViewModel.TurnoverDataList;
+            
         }
 
     }
