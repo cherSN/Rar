@@ -318,5 +318,38 @@ namespace Rar
             
         }
 
+        private bool IsDatePickerUsed(DependencyObject obj)
+        {
+            if (obj.DependencyObjectType.Name.Equals("DatePicker")) return true;
+            else             {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)                 {
+                    DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                    if (IsDatePickerUsed(child)) return true;
+
+                }
+            }
+            return false;
+        }
+
+
+        private void dataGridF6_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (e.AddedCells.Count == 0) return;
+            var cellInfo = e.AddedCells[0];
+
+            if (cellInfo.Column.GetType().Equals(typeof(DataGridTemplateColumn)))
+            {
+                DataGridTemplateColumn column = (DataGridTemplateColumn)cellInfo.Column;
+                DataTemplate myDataTemplate = column.CellEditingTemplate;
+                DependencyObject obj = (DependencyObject)myDataTemplate.LoadContent();
+                if (IsDatePickerUsed(obj))
+                {
+                    dataGridF6.BeginEdit();
+                }
+            }
+
+
+        }
+    
     }
 }

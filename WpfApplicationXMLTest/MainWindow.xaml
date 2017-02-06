@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rar"
         mc:Ignorable="d"
-        Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Language="ru-RU">
+        Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Language="ru-RU" DataContext="{DynamicResource RarViewModel}">
     <Window.Resources>
         <Style x:Key="DoubleGridColumn">
             <!--<Setter Property="Control.FontFamily" Value="Calibri"></Setter>
@@ -77,7 +77,7 @@
             <TabControl x:Name="tabControl" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5">
-                        <DataGrid x:Name="dataGridF6"  Margin="0,0,0,0" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid x:Name="dataGridF6"  Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
                             <DataGrid.Columns>
                                 <!--<DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Производитель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Producter}" TextBinding="{x:Null}"/>
                                 <DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Покупатель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Buyer}" TextBinding="{x:Null}"/>-->
@@ -89,7 +89,20 @@
                                 <DataGridTextColumn Binding="{Binding Path=Buyer.Name}" Header="Покупатель" ClipboardContentBinding="{x:Null}" MinWidth="100" ElementStyle="{StaticResource TextGridColumn}"/>
                                 <DataGridTextColumn Binding="{Binding Path=Buyer.INN}" Header="ИНН Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
                                 <DataGridTextColumn Binding="{Binding Path=Buyer.KPP}" Header="КПП Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                <DataGridTextColumn Binding="{Binding Path=DocumentDate , StringFormat=\{0:d\}}" Header="Дата" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                                
+                                <DataGridTemplateColumn  Header="Дата"  MinWidth="60">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DocumentDate, StringFormat=\{0:d\}}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding DocumentDate, Mode=TwoWay,  ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
                                 <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ElementStyle="{StaticResource DoubleGridColumn}" ClipboardContentBinding="{x:Null}" MinWidth="70" />
 
@@ -98,7 +111,7 @@
                                 <DataGridTemplateColumn Header="Pokup" Width="150">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox Text="{Binding Buyer.Name}"/>
+                                            <TextBlock Text="{Binding Buyer.Name}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                     <DataGridTemplateColumn.CellEditingTemplate>
