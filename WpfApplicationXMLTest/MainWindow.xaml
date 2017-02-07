@@ -24,8 +24,11 @@
             <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
             <Setter Property="TextBlock.Margin" Value="5,0,5,0" />
         </Style>
-        <local:RarViewModel x:Key="RarViewModel"/>
+        <!--<local:RarViewModel x:Key="RarViewModel"/>-->
     </Window.Resources>
+    <Window.DataContext>
+        <local:RarViewModel/>
+    </Window.DataContext>
     <DockPanel>
         <Menu x:Name="menu" Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -77,7 +80,7 @@
             <TabControl x:Name="tabControl" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5">
-                        <DataGrid x:Name="dataGridF6"  Margin="0,0,0,0" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid x:Name="dataGridF6"  Margin="0,0,0,0" AutoGenerateColumns="False" >
                             <DataGrid.Columns>
                                 <!--<DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Производитель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Producter}" TextBinding="{x:Null}"/>
                                 <DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Покупатель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Buyer}" TextBinding="{x:Null}"/>-->
@@ -95,17 +98,15 @@
 
                                 <!--<DataGridComboBoxColumn ItemsSource="{Binding Source=CompanyList}" DisplayMemberPath="Name" SelectedValuePath="id" SelectedValueBinding="{Binding manufacturer_id}" Header="Manufacturer" Width="*" />-->
 
-                                <DataGridTemplateColumn Header="Pokup" Width="150">
+                                <DataGridTemplateColumn x:Name="colPokup" Header="Pokup" Width="150">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox Text="{Binding Buyer.Name}"/>
+                                            <TextBox x:Name="tbTest" Text="{Binding Buyer.Name}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <ComboBox x:Name="cbTest" Height="22" 
-                                                      SelectedItem="{Binding Buyer}" 
-                                                      ItemsSource="{Binding CompanyList, Source={StaticResource RarViewModel}}" />
+                                            <ComboBox x:Name="cbTest" Height="22" SelectedItem="{Binding Buyer}" IsEditable="True" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
@@ -116,7 +117,7 @@
                 <TabItem x:Name="tabCompanies" Header="Контрагенты">
                     <Grid Background="#FFE5E5E5">
                         <ToolBar x:Name="toolBar" Height="21" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="dataGridCompanies" ItemsSource="{Binding CompanyList}" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid x:Name="dataGridCompanies" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Path=ID}" ClipboardContentBinding="{x:Null}" Header="ИД" Width="40"/>
                                 <DataGridCheckBoxColumn Binding="{Binding Path=Producter}" ClipboardContentBinding="{x:Null}" Header="ПИ"/>

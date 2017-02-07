@@ -36,6 +36,7 @@ namespace Rar
             //CompanyList = new List<RarCompany>();
             //File = new RarFile();
  //           dataGridCompanies.ItemsSource = CompanyList;
+ 
         }
         private void SetupFormData(XElement turnoverdata)
         {
@@ -315,7 +316,11 @@ namespace Rar
             //dataGridCompanies.ItemsSource = rac;
             comboBoxPartner.ItemsSource = ViewModel.CompanyList;
             dataGridF6.ItemsSource = ViewModel.TurnoverDataList;
+            dataGridCompanies.ItemsSource = ViewModel.CompanyList;
+            //colPokup.CellEditingTemplateSelector
             
+
+
         }
 
     }
