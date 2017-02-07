@@ -133,6 +133,11 @@ namespace Rar
             CompanyList = new List<RarCompany>();
             OurCompany = new RarOurCompany();
             TurnoverDataList = new List<RarTurnoverData>();
+
+            CompanyList.Add(new RarCompany("Первый"));
+            CompanyList.Add(new RarCompany("Второй"));
+            CompanyList.Add(new RarCompany("Третий"));
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -116,9 +116,7 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <ComboBox x:Name="cbTest" Height="22" 
-                                                      SelectedItem="{Binding Buyer}" 
-                                                      ItemsSource="{Binding CompanyList, Source={StaticResource RarViewModel}}" />
+                                            <ComboBox x:Name="cbTest" Height="22" SelectedItem="{Binding Buyer}" ItemsSource="{Binding CompanyList, Source={StaticResource RarViewModel}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
