@@ -33,6 +33,14 @@ namespace Rar
             Adress = new RarAdress();
             LicensesList = new List<RarLicense>();
         }
+        public RarCompany (string name) 
+        {
+            Adress = new RarAdress();
+            LicensesList = new List<RarLicense>();
+            Name = name;
+
+        }
+        public override string ToString() { return Name; }
     }
 
     public class RarSubdevision
