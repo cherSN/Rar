@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Rar"
+        xmlns:local="clr-namespace:Rar.ViewWpf"
         mc:Ignorable="d"
         Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Language="ru-RU" DataContext="{DynamicResource RarViewModel}">
+    <!--<Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="Executed_Open" CanExecute="CanExecute_Open"/>
+    </Window.CommandBindings>-->
     <Window.Resources>
         <Style x:Key="DoubleGridColumn">
             <!--<Setter Property="Control.FontFamily" Value="Calibri"></Setter>
@@ -26,13 +29,13 @@
         </Style>
         <!--<local:RarViewModel x:Key="RarViewModel"/>-->
     </Window.Resources>
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <local:RarViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <DockPanel>
         <Menu x:Name="menu" Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Открыть" HorizontalAlignment="Left" Width="145" Click="MenuItem_Click"/>
+                <MenuItem Command="{Binding OpenFileCommand}"/>
             </MenuItem>
         </Menu>
         <StackPanel  DockPanel.Dock="Bottom">
@@ -80,7 +83,7 @@
             <TabControl x:Name="tabControl" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5">
-                        <DataGrid x:Name="dataGridF6"  Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
+                        <DataGrid  Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
                             <DataGrid.Columns>
                                 <!--<DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Производитель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Producter}" TextBinding="{x:Null}"/>
                                 <DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Покупатель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Buyer}" TextBinding="{x:Null}"/>-->
