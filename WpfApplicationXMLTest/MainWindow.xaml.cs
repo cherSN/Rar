@@ -29,6 +29,7 @@ namespace Rar.ViewWpf
         {
             InitializeComponent();
         }
+
         private bool IsDatePickerUsed(DependencyObject obj)
         {
             if (obj.DependencyObjectType.Name.Equals("DatePicker")) return true;
@@ -43,7 +44,6 @@ namespace Rar.ViewWpf
             }
             return false;
         }
-
 
         private void dataGridF6_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {

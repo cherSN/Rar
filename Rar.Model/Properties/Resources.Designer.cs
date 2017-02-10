@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Rar.ViewWpf.Properties {
+namespace Rar.Model.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Rar.ViewWpf.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Rar.ViewWpf.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Rar.Model.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,24 @@ namespace Rar.ViewWpf.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;windows-1251&quot;?&gt;
+        ///&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:sch=&quot;http://purl.oclc.org/dsdl/schematron&quot; elementFormDefault=&quot;qualified&quot; attributeFormDefault=&quot;unqualified&quot;&gt;
+        ///	&lt;xs:element name=&quot;Файл&quot;&gt;
+        ///		&lt;xs:annotation&gt;
+        ///			&lt;xs:documentation&gt;Декларация об объемах поставки этилового спирта, алкогольной и спиртосодержащей продукции&lt;/xs:documentation&gt;
+        ///		&lt;/xs:annotation&gt;
+        ///		&lt;xs:complexType&gt;
+        ///			&lt;xs:sequence&gt;
+        ///				&lt;xs:element name=&quot;Справочники&quot;&gt;
+        ///					&lt;xs:complexType&gt; [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string xsd_F6_010117 {
+            get {
+                return ResourceManager.GetString("xsd_F6_010117", resourceCulture);
             }
         }
     }

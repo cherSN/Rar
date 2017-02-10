@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using Microsoft.Win32;
+using System.Windows;
 
 namespace Rar.Model
 {
@@ -122,12 +122,12 @@ namespace Rar.Model
                 data.Subdevision = subdevision;
                 data.ProductionSortID = (string)el.Attribute("П000000000003");
                 string producterID = (string)el.Element("СведПроизвИмпорт").Attribute("ИдПроизвИмп");
-                data.Producter = CompanyList.Where(p => p.Producter && p.ID == producterID).First();
+                data.Producter = formF6.CompanyList.Where(p => p.Producter && p.ID == producterID).First();
                 string buyerID = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдПолучателя");
-                data.Buyer = CompanyList.Where(p => !p.Producter && p.ID == producterID).First();
+                data.Buyer = formF6.CompanyList.Where(p => !p.Producter && p.ID == producterID).First();
                 string licenseID = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдЛицензии");
 
-                List<RarCompany> buyers = CompanyList.Where(p => !p.Producter).ToList();
+                List<RarCompany> buyers = formF6.CompanyList.Where(p => !p.Producter).ToList();
                 RarLicense l = null;
                 foreach (RarCompany item in buyers)
                 {
@@ -254,7 +254,7 @@ namespace Rar.Model
 
         private static bool InDocumentIsValid(XDocument xdoc)
         {
-            string xsdMarkup = Rar.Model. .ViewWpf.Properties.Resources.strXSD;
+            string xsdMarkup = Rar.Model.Properties.Resources.xsd_F6_010117;
             XmlSchemaSet schemas = new XmlSchemaSet();
             schemas.Add("", XmlReader.Create(new StringReader(xsdMarkup)));
             bool errors = false;
@@ -269,7 +269,7 @@ namespace Rar.Model
             {
                 string mess = "Не соответствует схеме: " + "\n";
                 foreach (string item in errNodes) mess = mess + item + "\n";
-                MessageBox.Show(mess);
+                //MessageBox.Show(mess);
                 return false;
             }
             else return true;

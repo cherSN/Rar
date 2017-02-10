@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Rar.Model;
+using System.Windows.Input;
 
 namespace Rar.ViewModel
 {
@@ -136,6 +137,15 @@ namespace Rar.ViewModel
 
         //private List<RarCompany> companyList;
 
+        private readonly CommandBindingCollection _CommandBindings;
+        public CommandBindingCollection CommandBindings
+        {
+            get
+            {
+                return _CommandBindings;
+            }
+        }
+
         public RarViewModel()
         {
             _RarFile = new RarFormF6();
@@ -146,7 +156,28 @@ namespace Rar.ViewModel
             //CompanyList.Add(new RarCompany("Первый"));
             //CompanyList.Add(new RarCompany("Второй"));
             //CompanyList.Add(new RarCompany("Третий"));
+            //Create a command binding for the Save command
+            CommandBinding saveBinding = new CommandBinding(ApplicationCommands.Open, OpenExecute, OpenCanExecute);
 
+            //Register the binding to the class
+            CommandManager.RegisterClassCommandBinding(typeof(RarViewModel), saveBinding);
+
+            //Adds the binding to the CommandBindingCollection
+            CommandBindings.Add(saveBinding);
+        }
+
+        public bool OpenCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public ExecutedRoutedEventHandler OpenExecute(object parameter)
+        {
+            //Microsoft.Win32. OpenFileDialog openFileDialog = new OpenFileDialog();
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+
+            //}
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
