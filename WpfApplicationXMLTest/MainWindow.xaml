@@ -1,15 +1,17 @@
-﻿<Window x:Class="Rar.MainWindow"
+﻿<Window x:Class="Rar.ViewWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rar.ViewWpf"
+        xmlns:viewModel="clr-namespace:Rar.ViewModel;assembly=Rar.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Language="ru-RU" DataContext="{DynamicResource RarViewModel}">
+        Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Language="ru-RU">
     <!--<Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" Executed="Executed_Open" CanExecute="CanExecute_Open"/>
     </Window.CommandBindings>-->
     <Window.Resources>
+        <!--<viewModel:RarViewModel x:Key="rarViewModel"/>-->
         <Style x:Key="DoubleGridColumn">
             <!--<Setter Property="Control.FontFamily" Value="Calibri"></Setter>
             <Setter Property="Control.FontSize" Value="18"></Setter>
@@ -83,7 +85,7 @@
             <TabControl x:Name="tabControl" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5">
-                        <DataGrid  Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
+                        <DataGrid x:Name="dataGridF6" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
                             <DataGrid.Columns>
                                 <!--<DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Производитель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Producter}" TextBinding="{x:Null}"/>
                                 <DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Покупатель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Buyer}" TextBinding="{x:Null}"/>-->
