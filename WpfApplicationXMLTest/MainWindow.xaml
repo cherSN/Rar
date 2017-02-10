@@ -11,7 +11,7 @@
         <CommandBinding Command="ApplicationCommands.Open" Executed="Executed_Open" CanExecute="CanExecute_Open"/>
     </Window.CommandBindings>-->
     <Window.Resources>
-        <!--<viewModel:RarViewModel x:Key="rarViewModel"/>-->
+        <viewModel:RarViewModel x:Key="rarViewModel"/>
         <Style x:Key="DoubleGridColumn">
             <!--<Setter Property="Control.FontFamily" Value="Calibri"></Setter>
             <Setter Property="Control.FontSize" Value="18"></Setter>
@@ -31,9 +31,10 @@
         </Style>
         <!--<local:RarViewModel x:Key="RarViewModel"/>-->
     </Window.Resources>
-    <!--<Window.DataContext>
-        <local:RarViewModel/>
-    </Window.DataContext>-->
+    <Window.DataContext>
+        <viewModel:RarViewModel/>
+    </Window.DataContext>
+
     <DockPanel>
         <Menu x:Name="menu" Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Файл">
