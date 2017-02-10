@@ -38,7 +38,8 @@
     <DockPanel>
         <Menu x:Name="menu" Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Файл">
-                <MenuItem Command="{Binding OpenFileCommand}"/>
+                <MenuItem Command="{Binding OpenFileCommand}" Header="Open"/>
+                <!--<Button Command="{Binding AddNameCommand}" CommandParameter="{Binding}">Add</Button>-->
             </MenuItem>
         </Menu>
         <StackPanel  DockPanel.Dock="Bottom">

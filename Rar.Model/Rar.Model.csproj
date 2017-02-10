@@ -54,7 +54,7 @@
     <Compile Include="RarOurCompany.cs" />
     <Compile Include="RarSubdevision.cs" />
     <Compile Include="RarCompany.cs" />
-    <Compile Include="RarF6.cs" />
+    <Compile Include="RarFormF6.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

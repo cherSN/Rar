@@ -7,14 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Rar.Model;
 using System.Windows.Input;
+using Microsoft.Win32;
+using System.Collections.ObjectModel;
 
 namespace Rar.ViewModel
 {
     public class RarViewModel : INotifyPropertyChanged
     {
+        #region  - Private Fields -
         private RarFormF6 _RarFile;
-        //private RarOurCompany _OurCompany;
+        #endregion
 
+        #region - Public Properties -
         public DateTime DocumentDate
         {
             get
@@ -87,65 +91,50 @@ namespace Rar.ViewModel
                 OnPropertyChanged("CorrectionNumber");
             }
         }
-
-        //public RarOurCompany OurCompany
-        //{
-        //    get
-        //    {
-        //        return _OurCompany;
-        //    }
-
-        //    set
-        //    {
-        //        _OurCompany = value;
-        //        OnPropertyChanged("OurCompany");
-
-        //    }
-        //}
-
-
-        //public List<RarCompany> CompanyList
-        //{
-        //    get
-        //    {
-        //        return companyList;
-        //    }
-
-        //    set
-        //    {
-        //        companyList = value;
-        //        OnPropertyChanged("CompanyList");
-        //    }
-        //}
-
-        //public List<RarTurnoverData> TurnoverDataList
-        //{
-        //    get
-        //    {
-        //        return turnoverDataList;
-        //    }
-
-        //    set
-        //    {
-        //        turnoverDataList = value;
-        //        OnPropertyChanged("TurnoverDataList");
-
-        //    }
-        //}
-
-        //private List<RarTurnoverData> turnoverDataList;
-
-        //private List<RarCompany> companyList;
-
-        private readonly CommandBindingCollection _CommandBindings;
-        public CommandBindingCollection CommandBindings
+        public RarOurCompany OurCompany
         {
             get
             {
-                return _CommandBindings;
+                return _RarFile.OurCompany;
+            }
+
+            set
+            {
+                _RarFile.OurCompany = value;
+                OnPropertyChanged("OurCompany");
+
             }
         }
+        public ObservableCollection<RarCompany> CompanyList
+        {
+            get
+            {
+                return _RarFile.CompanyList;
+            }
 
+            set
+            {
+                _RarFile.CompanyList = value;
+                OnPropertyChanged("CompanyList");
+            }
+        }
+        public ObservableCollection<RarTurnoverData> TurnoverDataList
+        {
+            get
+            {
+                return _RarFile.TurnoverDataList;
+            }
+
+            set
+            {
+                _RarFile.TurnoverDataList = value;
+                OnPropertyChanged("TurnoverDataList");
+
+            }
+        }
+        #endregion
+
+        #region - Constructor -
         public RarViewModel()
         {
             _RarFile = new RarFormF6();
@@ -156,28 +145,50 @@ namespace Rar.ViewModel
             //CompanyList.Add(new RarCompany("Первый"));
             //CompanyList.Add(new RarCompany("Второй"));
             //CompanyList.Add(new RarCompany("Третий"));
-            //Create a command binding for the Save command
-            CommandBinding saveBinding = new CommandBinding(ApplicationCommands.Open, OpenExecute, OpenCanExecute);
-
-            //Register the binding to the class
-            CommandManager.RegisterClassCommandBinding(typeof(RarViewModel), saveBinding);
-
-            //Adds the binding to the CommandBindingCollection
-            CommandBindings.Add(saveBinding);
         }
+        #endregion
 
-        public bool OpenCanExecute(object parameter)
+        #region - Commands -
+        private RelayCommand _openFileCommand;
+
+        public ICommand OpenFileCommand
+        {
+            get
+            {
+                if (_openFileCommand == null)
+                {
+                    _openFileCommand = new RelayCommand(param => OpenFile(), param => CanOpenFile());
+                }
+                return _openFileCommand;
+            }
+        }
+        public bool CanOpenFile()
         {
             return true;
         }
-
-        public ExecutedRoutedEventHandler OpenExecute(object parameter)
+        private void OpenFile()
         {
-            //Microsoft.Win32. OpenFileDialog openFileDialog = new OpenFileDialog();
-            //if (openFileDialog.ShowDialog() == true)
-            //{
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                _RarFile.LoadF6(openFileDialog.FileName);
+                UpdateAll();
+            }
+        } 
+        #endregion
 
-            //}
+        private void UpdateAll()
+        {
+            OnPropertyChanged("DocumentDate");
+            OnPropertyChanged("Version");
+            OnPropertyChanged("ProgramName");
+            OnPropertyChanged("FormNumber");
+            OnPropertyChanged("ReportPeriod");
+            OnPropertyChanged("YearReport");
+            OnPropertyChanged("CorrectionNumber");
+            OnPropertyChanged("OurCompany");
+            OnPropertyChanged("CompanyList");
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
