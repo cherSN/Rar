@@ -29,6 +29,6 @@ namespace Rar.Model
             Name = name;
 
         }
-        public override string ToString() { return Name; }
+        public override string ToString() { return Name+" ИНН: "+INN+"; КПП: "+KPP; }
     }
 }

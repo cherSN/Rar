@@ -9,6 +9,7 @@ using Rar.Model;
 using System.Windows.Input;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace Rar.ViewModel
 {
@@ -16,6 +17,8 @@ namespace Rar.ViewModel
     {
         #region  - Private Fields -
         private RarFormF6 _RarFile;
+        //private ObservableCollection<RarCompany> _CompanyList;
+
         #endregion
 
         #region - Public Properties -
@@ -117,6 +120,7 @@ namespace Rar.ViewModel
                 _RarFile.CompanyList = value;
                 OnPropertyChanged("CompanyList");
             }
+
         }
         public ObservableCollection<RarTurnoverData> TurnoverDataList
         {
@@ -138,13 +142,7 @@ namespace Rar.ViewModel
         public RarViewModel()
         {
             _RarFile = new RarFormF6();
-            //CompanyList = new List<RarCompany>();
-            //OurCompany = new RarOurCompany();
-            //TurnoverDataList = new List<RarTurnoverData>();
 
-            //CompanyList.Add(new RarCompany("Первый"));
-            //CompanyList.Add(new RarCompany("Второй"));
-            //CompanyList.Add(new RarCompany("Третий"));
         }
         #endregion
 
@@ -171,6 +169,8 @@ namespace Rar.ViewModel
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
+                CompanyList.Add(new RarCompany("Четвертый"));
+
                 _RarFile.LoadF6(openFileDialog.FileName);
                 UpdateAll();
             }
@@ -187,8 +187,8 @@ namespace Rar.ViewModel
             OnPropertyChanged("YearReport");
             OnPropertyChanged("CorrectionNumber");
             OnPropertyChanged("OurCompany");
-            OnPropertyChanged("CompanyList");
-
+            OnCollectionChanged();
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -196,6 +196,13 @@ namespace Rar.ViewModel
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public void OnCollectionChanged()
+        {
+            if (CollectionChanged != null)
+                CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
     }
 }

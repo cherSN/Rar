@@ -38,13 +38,17 @@ namespace Rar.Model
             ReportPeriod = "NoReportPeriod";
             YearReport = "NoYear";
             CorrectionNumber = 999;
-        } 
+
+
+            CompanyList.Add(new RarCompany("Первый"));
+            CompanyList.Add(new RarCompany("Второй"));
+            CompanyList.Add(new RarCompany("Третий"));
+        }
         #endregion
 
         public void LoadF6(string filename) {
-            //Очистить все
-            //CompanyList.RemoveAll(s => true);
-            //TurnoverDataList.RemoveAll(s => true);
+            CompanyList.Clear();
+            TurnoverDataList.Clear();
             ParserF6.Parse(filename, this);
             }
 

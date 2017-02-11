@@ -6,40 +6,28 @@
         xmlns:local="clr-namespace:Rar.ViewWpf"
         xmlns:viewModel="clr-namespace:Rar.ViewModel;assembly=Rar.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Language="ru-RU">
-    <!--<Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Open" Executed="Executed_Open" CanExecute="CanExecute_Open"/>
-    </Window.CommandBindings>-->
+        Title="MainWindow" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" DataContext="{StaticResource rarViewModel}" Language="ru-RU">
+
+    
     <Window.Resources>
-        <viewModel:RarViewModel x:Key="rarViewModel"/>
         <Style x:Key="DoubleGridColumn">
-            <!--<Setter Property="Control.FontFamily" Value="Calibri"></Setter>
-            <Setter Property="Control.FontSize" Value="18"></Setter>
-            <Setter Property="Control.FontWeight" Value="Bold"></Setter>
-            <Setter Property="Control.Padding" Value="5"></Setter>
-            <Setter Property="Control.Margin" Value="5"></Setter>-->
             <Setter Property="TextBlock.TextAlignment" Value="Right" />
         </Style>
         <Style x:Key="TextGridColumn">
-            <!--<Setter Property="Control.FontFamily" Value="Calibri"></Setter>
-            <Setter Property="Control.FontSize" Value="18"></Setter>
-            <Setter Property="Control.FontWeight" Value="Bold"></Setter>
-            <Setter Property="Control.Padding" Value="5"></Setter>
-            <Setter Property="Control.Margin" Value="5"></Setter>-->
             <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
             <Setter Property="TextBlock.Margin" Value="5,0,5,0" />
         </Style>
         <!--<local:RarViewModel x:Key="RarViewModel"/>-->
     </Window.Resources>
-    <Window.DataContext>
-        <viewModel:RarViewModel/>
-    </Window.DataContext>
 
+    <!--<Window.DataContext>
+        <viewModel:RarViewModel/>
+    </Window.DataContext>-->
+    
     <DockPanel>
         <Menu x:Name="menu" Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <MenuItem Command="{Binding OpenFileCommand}" Header="Open"/>
-                <!--<Button Command="{Binding AddNameCommand}" CommandParameter="{Binding}">Add</Button>-->
             </MenuItem>
         </Menu>
         <StackPanel  DockPanel.Dock="Bottom">
@@ -47,7 +35,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label x:Name="labelPartner" Content="Контрагент:" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"  Padding="3,0,0,0" VerticalContentAlignment="Center" Margin="3"/>
-                        <ComboBox x:Name="comboBoxPartner"  VerticalAlignment="Center" HorizontalAlignment="Left" MaxDropDownHeight="500" MinWidth="400" Margin="3"  >
+                        <ComboBox x:Name="comboBoxPartner"  ItemsSource="{Binding CompanyList}" VerticalAlignment="Center" HorizontalAlignment="Left" MaxDropDownHeight="500" MinWidth="400" Margin="3"  >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid ShowGridLines="False">
@@ -87,10 +75,8 @@
             <TabControl x:Name="tabControl" Grid.Row="1">
                 <TabItem x:Name="tabData" Header="Форма 6">
                     <Grid Background="#FFE5E5E5">
-                        <DataGrid x:Name="dataGridF6" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
+                        <DataGrid x:Name="dataGridF6" ItemsSource="{Binding TurnoverDataList}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
                             <DataGrid.Columns>
-                                <!--<DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Производитель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Producter}" TextBinding="{x:Null}"/>
-                                <DataGridComboBoxColumn  ClipboardContentBinding="{x:Null}" Header="Покупатель" SelectedValueBinding="{x:Null}" SelectedItemBinding="{Binding Path=Buyer}" TextBinding="{x:Null}"/>-->
                                 <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
                                 <DataGridTextColumn Binding="{Binding Path=ProductionSortID}" Header="Код" ClipboardContentBinding="{x:Null}" MinWidth="40"/>
                                 <DataGridTextColumn Binding="{Binding Path=Producter.Name}" Header="Производитель" ClipboardContentBinding="{x:Null}" MinWidth="100"/>
@@ -99,7 +85,6 @@
                                 <DataGridTextColumn Binding="{Binding Path=Buyer.Name}" Header="Покупатель" ClipboardContentBinding="{x:Null}" MinWidth="100" ElementStyle="{StaticResource TextGridColumn}"/>
                                 <DataGridTextColumn Binding="{Binding Path=Buyer.INN}" Header="ИНН Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
                                 <DataGridTextColumn Binding="{Binding Path=Buyer.KPP}" Header="КПП Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                
                                 <DataGridTemplateColumn  Header="Дата"  MinWidth="60">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -113,10 +98,10 @@
                                     </DataGridTemplateColumn.CellEditingTemplate>
 
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                                <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док"  MinWidth="60"/>
                                 <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ElementStyle="{StaticResource DoubleGridColumn}" ClipboardContentBinding="{x:Null}" MinWidth="70" />
 
-                                <!--<DataGridComboBoxColumn ItemsSource="{Binding Source=CompanyList}" DisplayMemberPath="Name" SelectedValuePath="id" SelectedValueBinding="{Binding manufacturer_id}" Header="Manufacturer" Width="*" />-->
+                                <DataGridComboBoxColumn ItemsSource="{Binding CompanyList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Producter}" Header="Manufacturer"/>
 
                                 <DataGridTemplateColumn x:Name="colPokup" Header="Pokup" Width="150">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -126,7 +111,11 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <ComboBox x:Name="cbTest" Height="22" SelectedItem="{Binding Buyer}" ItemsSource="{Binding CompanyList, Source={StaticResource RarViewModel}}" />
+                                            <ComboBox x:Name="cbTest" Height="22" SelectedItem="{Binding Buyer}" ItemsSource="{Binding CompanyList, Source={StaticResource rarViewModel}}" >
+                                                <ComboBox.DataContext>
+                                                    <viewModel:RarViewModel/>
+                                                </ComboBox.DataContext>
+                                            </ComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
@@ -137,7 +126,7 @@
                 <TabItem x:Name="tabCompanies" Header="Контрагенты">
                     <Grid Background="#FFE5E5E5">
                         <ToolBar x:Name="toolBar" Height="21" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="dataGridCompanies" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid x:Name="dataGridCompanies" ItemsSource="{Binding CompanyList}" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Path=ID}" ClipboardContentBinding="{x:Null}" Header="ИД" Width="40"/>
                                 <DataGridCheckBoxColumn Binding="{Binding Path=Producter}" ClipboardContentBinding="{x:Null}" Header="ПИ"/>
@@ -146,13 +135,6 @@
                                 <DataGridTextColumn Binding="{Binding Path=KPP}" ClipboardContentBinding="{x:Null}" Header="КПП" Width="80"/>
                                 <DataGridTextColumn Binding="{Binding Path=Adress.AdressString}" ClipboardContentBinding="{x:Null}" Header="Адрес" Width="*"/>
                             </DataGrid.Columns>
-                            <!--<DataGrid.RowDetailsTemplate>
-                                <DataTemplate>
-                                    <Border Margin="10" Padding="10" BorderBrush="SteelBlue" BorderThickness="2" CornerRadius="5">
-                                        <TextBlock Text="{Binding Path=Adress.AdressString}" TextWrapping="Wrap" FontSize="10" MaxWidth="350"></TextBlock>
-                                    </Border>
-                                </DataTemplate>
-                            </DataGrid.RowDetailsTemplate>-->
                         </DataGrid>
                     </Grid>
                 </TabItem>
