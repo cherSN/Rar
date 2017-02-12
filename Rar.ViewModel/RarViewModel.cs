@@ -10,6 +10,8 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Windows.Data;
+
 
 namespace Rar.ViewModel
 {
@@ -17,7 +19,6 @@ namespace Rar.ViewModel
     {
         #region  - Private Fields -
         private RarFormF6 _RarFile;
-        //private ObservableCollection<RarCompany> _CompanyList;
 
         #endregion
 
@@ -67,7 +68,7 @@ namespace Rar.ViewModel
                 OnPropertyChanged("FormNumber");
             }
         }
-        public string ReportPeriod
+        public int ReportPeriod
         {
             get { return _RarFile.ReportPeriod; }
             set
@@ -76,7 +77,7 @@ namespace Rar.ViewModel
                 OnPropertyChanged("ReportPeriod");
             }
         }
-        public string YearReport
+        public int YearReport
         {
             get { return _RarFile.YearReport; }
             set
@@ -108,41 +109,30 @@ namespace Rar.ViewModel
 
             }
         }
-        public ObservableCollection<RarCompany> CompanyList
-        {
+        public ObservableCollection<RarCompany> BuyersList { get { return new ObservableCollection<RarCompany>(_RarFile.BuyersList); } }
+        public ObservableCollection<RarCompany> ManufacturersList { get { return new ObservableCollection<RarCompany>(_RarFile.ManufacturersList); } }
+        public ObservableCollection<RarTurnoverData> TurnoverDataList { get { return new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList); } }
+        public ICollectionView TurnoverDataListView {
             get
             {
-                return _RarFile.CompanyList;
-            }
-
-            set
-            {
-                _RarFile.CompanyList = value;
-                OnPropertyChanged("CompanyList");
-            }
-
-        }
-        public ObservableCollection<RarTurnoverData> TurnoverDataList
-        {
-            get
-            {
-                return _RarFile.TurnoverDataList;
-            }
-
-            set
-            {
-                _RarFile.TurnoverDataList = value;
-                OnPropertyChanged("TurnoverDataList");
-
+                CollectionViewSource turnoverDataListViewSource = new CollectionViewSource();
+                turnoverDataListViewSource.Source = _RarFile.TurnoverDataList;
+                turnoverDataListViewSource.Filter += viewSource_Filter;
+                return turnoverDataListViewSource.View;
             }
         }
+
+
         #endregion
-
+        void viewSource_Filter(object sender, FilterEventArgs e)
+        {
+            //e.Accepted = ((RarTurnoverData)e.Item).IndexOf(filter.Text) >= 0;
+            //return true;
+        }
         #region - Constructor -
         public RarViewModel()
         {
             _RarFile = new RarFormF6();
-
         }
         #endregion
 
@@ -169,8 +159,6 @@ namespace Rar.ViewModel
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
-                CompanyList.Add(new RarCompany("Четвертый"));
-
                 _RarFile.LoadF6(openFileDialog.FileName);
                 UpdateAll();
             }
@@ -197,7 +185,6 @@ namespace Rar.ViewModel
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-
         public event NotifyCollectionChangedEventHandler CollectionChanged;
         public void OnCollectionChanged()
         {

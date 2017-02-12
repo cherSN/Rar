@@ -6,6 +6,6 @@
        
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ObjectDataProvider x:Key="rarViewModel" ObjectType="{x:Type viewModel:RarViewModel}"/>
+        <viewModel:RarViewModel x:Key="rarViewModel" />
     </Application.Resources>
 </Application>

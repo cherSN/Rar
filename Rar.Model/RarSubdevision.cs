@@ -8,14 +8,16 @@ namespace Rar.Model
 {
     public class RarSubdevision
     {
+        #region - Public Properties -
         public string Name { set; get; }
-        public string KPP { set; get; }
+        public int KPP { set; get; }
         public RarAdress Adress { set; get; }
-        public bool SalePresented { set; get; }
-        public bool ReturnPresented { set; get; }
+        #endregion
+        #region - Constructor -
         public RarSubdevision()
         {
             Adress = new RarAdress();
-        }
+        } 
+        #endregion
     }
 }
