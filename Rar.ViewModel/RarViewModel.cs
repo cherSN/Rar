@@ -121,7 +121,7 @@ namespace Rar.ViewModel
             set
             {
                 buyersList = value;
-                //OnPropertyChanged("BuyersList");
+                OnPropertyChanged("BuyersList");
             }
         }
         public ObservableCollection<RarCompany> ManufacturersList { get { return new ObservableCollection<RarCompany>(_RarFile.ManufacturersList); } }
