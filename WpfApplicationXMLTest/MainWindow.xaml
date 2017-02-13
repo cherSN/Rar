@@ -81,151 +81,29 @@
                 </ListView.View>
             </ListView>
             <GridSplitter Grid.Column="1" ShowsPreview="False" Width="4" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0" />
-            <TabControl Grid.Column="2" >
-                <TabItem x:Name="tabData" Header="Форма 6" Margin="0">
-                    <Grid Background="#FFE5E5E5">
-                        <DataGrid x:Name="dataGridF6" ItemsSource="{Binding TurnoverDataList}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                <DataGridTextColumn Binding="{Binding Path=ProductionSortID}" Header="Код" ClipboardContentBinding="{x:Null}" MinWidth="40"/>
-                                <DataGridTextColumn Binding="{Binding Path=Producter.Name}" Header="Производитель" ClipboardContentBinding="{x:Null}" MinWidth="100"/>
-                                <DataGridTextColumn Binding="{Binding Path=Producter.INN}" Header="ИНН Произв" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                <DataGridTextColumn Binding="{Binding Path=Producter.KPP}" Header="КПП Произв" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                <DataGridTextColumn Binding="{Binding Path=Buyer.Name}" Header="Покупатель" ClipboardContentBinding="{x:Null}" MinWidth="100" ElementStyle="{StaticResource TextGridColumn}"/>
-                                <DataGridTextColumn Binding="{Binding Path=Buyer.INN}" Header="ИНН Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                <DataGridTextColumn Binding="{Binding Path=Buyer.KPP}" Header="КПП Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                <DataGridTemplateColumn  Header="Дата"  MinWidth="60">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding DocumentDate, StringFormat=\{0:d\}}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                    <DataGridTemplateColumn.CellEditingTemplate>
-                                        <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding DocumentDate, Mode=TwoWay,  ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellEditingTemplate>
+            <DataGrid x:Name="dataGridF6" Grid.Column="2" ItemsSource="{Binding TurnoverDataList}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
+                    <DataGridTextColumn Binding="{Binding Path=ProductionSortID}" Header="Код" ClipboardContentBinding="{x:Null}" MinWidth="40"/>
+                    <DataGridComboBoxColumn ItemsSource="{Binding ManufacturersList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Manufacturer}" Header="Производитель"/>
+                    <DataGridComboBoxColumn ItemsSource="{Binding BuyersList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Buyer}" Header="Покупатель"/>
+                    <DataGridTemplateColumn  Header="Дата"  MinWidth="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DocumentDate, StringFormat=\{0:d\}}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding DocumentDate, Mode=TwoWay,  ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
 
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док"  MinWidth="60"/>
-                                <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ElementStyle="{StaticResource DoubleGridColumn}" ClipboardContentBinding="{x:Null}" MinWidth="70" />
-
-                                <DataGridComboBoxColumn ItemsSource="{Binding BuyersList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Producter}" Header="Manufacturer"/>
-
-                                <DataGridTemplateColumn x:Name="colPokup" Header="Pokup" Width="150">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Buyer.Name}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                    <DataGridTemplateColumn.CellEditingTemplate>
-                                        <DataTemplate>
-                                            <ComboBox x:Name="cbTest" Height="22" SelectedItem="{Binding Buyer}" ItemsSource="{Binding CompanyList, Source={StaticResource rarViewModel}}" >
-                                                <ComboBox.DataContext>
-                                                    <viewModel:RarViewModel/>
-                                                </ComboBox.DataContext>
-                                            </ComboBox>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellEditingTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabCompanies" Header="Контрагенты">
-                    <Grid Background="#FFE5E5E5">
-                        <ToolBar x:Name="toolBar" Height="21" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="dataGridCompanies" ItemsSource="{Binding BuyersList}" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Path=ID}" ClipboardContentBinding="{x:Null}" Header="ИД" Width="40"/>
-                                <DataGridCheckBoxColumn Binding="{Binding Path=Producter}" ClipboardContentBinding="{x:Null}" Header="ПИ"/>
-                                <DataGridTextColumn Binding="{Binding Path=Name}" ClipboardContentBinding="{x:Null}" Header="Наименование" Width="300"/>
-                                <DataGridTextColumn Binding="{Binding Path=INN}" ClipboardContentBinding="{x:Null}" Header="ИНН" Width="80"/>
-                                <DataGridTextColumn Binding="{Binding Path=KPP}" ClipboardContentBinding="{x:Null}" Header="КПП" Width="80"/>
-                                <DataGridTextColumn Binding="{Binding Path=Adress.AdressString}" ClipboardContentBinding="{x:Null}" Header="Адрес" Width="*"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </TabItem>
-            </TabControl>
-
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док"  MinWidth="60"/>
+                    <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ElementStyle="{StaticResource DoubleGridColumn}" ClipboardContentBinding="{x:Null}" MinWidth="70" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
-
-        <!--<StackPanel Orientation="Horizontal">
-            <ListBox ItemsSource="{Binding BuyersList}" Width="2" MinWidth="200">
-                <TextBox Text="{Binding Name}"> </TextBox>
-            
-            </ListBox>
-            <StackPanel  DockPanel.Dock="Right">
-
-                <TabControl x:Name="tabControl" >
-                    <TabItem x:Name="tabData" Header="Форма 6" Margin="0">
-                        <Grid Background="#FFE5E5E5">
-                            <DataGrid x:Name="dataGridF6" ItemsSource="{Binding TurnoverDataList}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                    <DataGridTextColumn Binding="{Binding Path=ProductionSortID}" Header="Код" ClipboardContentBinding="{x:Null}" MinWidth="40"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Producter.Name}" Header="Производитель" ClipboardContentBinding="{x:Null}" MinWidth="100"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Producter.INN}" Header="ИНН Произв" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Producter.KPP}" Header="КПП Произв" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Buyer.Name}" Header="Покупатель" ClipboardContentBinding="{x:Null}" MinWidth="100" ElementStyle="{StaticResource TextGridColumn}"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Buyer.INN}" Header="ИНН Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Buyer.KPP}" Header="КПП Клиента" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                                    <DataGridTemplateColumn  Header="Дата"  MinWidth="60">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding DocumentDate, StringFormat=\{0:d\}}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                        <DataGridTemplateColumn.CellEditingTemplate>
-                                            <DataTemplate>
-                                                <DatePicker SelectedDate="{Binding DocumentDate, Mode=TwoWay,  ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellEditingTemplate>
-
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док"  MinWidth="60"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ElementStyle="{StaticResource DoubleGridColumn}" ClipboardContentBinding="{x:Null}" MinWidth="70" />
-
-                                    <DataGridComboBoxColumn ItemsSource="{Binding BuyersList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Producter}" Header="Manufacturer"/>
-
-                                    <DataGridTemplateColumn x:Name="colPokup" Header="Pokup" Width="150">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Buyer.Name}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                        <DataGridTemplateColumn.CellEditingTemplate>
-                                            <DataTemplate>
-                                                <ComboBox x:Name="cbTest" Height="22" SelectedItem="{Binding Buyer}" ItemsSource="{Binding CompanyList, Source={StaticResource rarViewModel}}" >
-                                                    <ComboBox.DataContext>
-                                                        <viewModel:RarViewModel/>
-                                                    </ComboBox.DataContext>
-                                                </ComboBox>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellEditingTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                    </TabItem>
-                    <TabItem x:Name="tabCompanies" Header="Контрагенты">
-                        <Grid Background="#FFE5E5E5">
-                            <ToolBar x:Name="toolBar" Height="21" VerticalAlignment="Top"/>
-                            <DataGrid x:Name="dataGridCompanies" ItemsSource="{Binding BuyersList}" Margin="0,21,0,0" AutoGenerateColumns="False" IsReadOnly="True">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Path=ID}" ClipboardContentBinding="{x:Null}" Header="ИД" Width="40"/>
-                                    <DataGridCheckBoxColumn Binding="{Binding Path=Producter}" ClipboardContentBinding="{x:Null}" Header="ПИ"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Name}" ClipboardContentBinding="{x:Null}" Header="Наименование" Width="300"/>
-                                    <DataGridTextColumn Binding="{Binding Path=INN}" ClipboardContentBinding="{x:Null}" Header="ИНН" Width="80"/>
-                                    <DataGridTextColumn Binding="{Binding Path=KPP}" ClipboardContentBinding="{x:Null}" Header="КПП" Width="80"/>
-                                    <DataGridTextColumn Binding="{Binding Path=Adress.AdressString}" ClipboardContentBinding="{x:Null}" Header="Адрес" Width="*"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
-            </StackPanel>
-        </StackPanel>-->
     </DockPanel>
 </Window>
