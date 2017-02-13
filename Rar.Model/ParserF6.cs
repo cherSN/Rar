@@ -48,12 +48,12 @@ namespace Rar.Model
             formF6.DocumentDate = DateTime.Parse(root.Attribute("ДатаДок").Value);
 
             formF6.FormNumber = (string)root.Element("ФормаОтч").Attribute("НомФорм");
-            formF6.ReportPeriod = (int)root.Element("ФормаОтч").Attribute("ПризПериодОтч");
-            formF6.YearReport = (int)root.Element("ФормаОтч").Attribute("ГодПериодОтч");
+            formF6.ReportPeriod = (string)root.Element("ФормаОтч").Attribute("ПризПериодОтч");
+            formF6.YearReport = (string)root.Element("ФормаОтч").Attribute("ГодПериодОтч");
 
             XElement corrections = root.Element("ФормаОтч").Element("Корректирующая");
-            if (corrections == null) formF6.CorrectionNumber = 0;
-            else formF6.CorrectionNumber = (int)corrections.Attribute("НомерКорр");
+            if (corrections == null) formF6.CorrectionNumber = "";
+            else formF6.CorrectionNumber = (string)corrections.Attribute("НомерКорр");
 
             SetupOrganization(root.Element("Документ").Element("Организация"), formF6.OurCompany);
 
@@ -62,6 +62,21 @@ namespace Rar.Model
             SetupManufacturers(references, formF6);
             SetupFormData(root.Element("Документ").Element("ОбъемОборота"), formF6);
         }
+
+        //private static int GetIntAttribute(XElement elm, string attribute)
+        //{
+        //    if (elm.Attribute(attribute)==null)
+        //        return 0;
+            
+        //    int result;
+        //    if(int.TryParse(elm.Attribute(attribute).Value, out result)) {
+        //        return result;
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    } 
+        //}
 
         private static void SetupOrganization(XElement organization, RarOurCompany OurCompany)
         {
@@ -80,14 +95,14 @@ namespace Rar.Model
             XElement company = organization.Element("Реквизиты").Element("ЮЛ");
             if (company != null)
             {
-                OurCompany.INN = (int)company.Attribute("ИННЮЛ");
-                OurCompany.KPP = (int)company.Attribute("КППЮЛ");
+                OurCompany.INN = (string)company.Attribute("ИННЮЛ"); // GetIntAttribute(company, "ИННЮЛ");
+                OurCompany.KPP = (string)company.Attribute("КППЮЛ"); //GetIntAttribute(company, "КППЮЛ");
             }
             else
             {
                 XElement individual = organization.Element("Реквизиты").Element("ФЛ");
                 if (individual != null)
-                    OurCompany.INN = (int)individual.Attribute("ИННФЛ");
+                    OurCompany.INN = (string)individual.Attribute("ИННФЛ"); //GetIntAttribute(individual,"ИННФЛ");
             }
 
             XElement lactivity = organization.Element("Деятельность").Element("Лицензируемая");
@@ -154,7 +169,7 @@ namespace Rar.Model
                 XElement resident = el.Element("Резидент");
                 if (resident != null)
                 {
-                    rc.CounryID = 643; //  ?????????????????????
+                    rc.CounryID = "643"; //  ?????????????????????
                     SetupLisences(rc, resident.Element("Лицензии"));
                     XElement adress = resident.Element("П000000000008");
                     rc.Adress = SetupAdress(adress);
@@ -162,14 +177,14 @@ namespace Rar.Model
                     XElement company = resident.Element("ЮЛ");
                     if (company != null)
                     {
-                        rc.INN = (int)company.Attribute("П000000000009");
-                        rc.KPP = (int)company.Attribute("П000000000010");
+                        rc.INN = (string)company.Attribute("П000000000009");
+                        rc.KPP = (string)company.Attribute("П000000000010");
                     }
                     else
                     {
                         XElement individual = resident.Element("ФЛ");
                         if (individual != null)
-                            rc.INN = (int)individual.Attribute("П000000000009");
+                            rc.INN = (string)individual.Attribute("П000000000009");
                     }
                 }
                 else
@@ -177,8 +192,8 @@ namespace Rar.Model
                     XElement foreigner = el.Element("Иностр");
                     if (foreigner != null)
                     {
-                        rc.CounryID = (int)foreigner.Attribute("П000000000081");
-                        rc.INN = (int)foreigner.Attribute("Номер");
+                        rc.CounryID = (string)foreigner.Attribute("П000000000081");
+                        rc.INN = (string)foreigner.Attribute("Номер");
                         rc.Adress = new RarAdress((string)foreigner.Attribute("П000000000082"));
                     }
                 }
@@ -195,8 +210,8 @@ namespace Rar.Model
                 RarCompany rc = new RarCompany();
                 rc.ID = (string)el.Attribute("ИдПроизвИмп");
                 rc.Name = (string)el.Attribute("П000000000004");
-                rc.INN = (int)el.Attribute("П000000000005");
-                rc.KPP = (int)el.Attribute("П000000000006");
+                rc.INN = (string)el.Attribute("П000000000005");
+                rc.KPP = (string)el.Attribute("П000000000006");
 
                 formF6.ManufacturersList.Add(rc);
             }
@@ -207,7 +222,7 @@ namespace Rar.Model
         {
             RarSubdevision subdevision = new RarSubdevision();
             subdevision.Name = (string)turnoverdata.Attribute("Наим");
-            subdevision.KPP = (int)turnoverdata.Attribute("КППЮЛ");
+            subdevision.KPP = (string)turnoverdata.Attribute("КППЮЛ");
             //subdevision.SalePresented = (bool)turnoverdata.Attribute("НаличиеПоставки");
             //subdevision.ReturnPresented = (bool)turnoverdata.Attribute("НаличиеВозврата");
             subdevision.Adress = SetupAdress(turnoverdata.Element("АдрОрг"));
@@ -217,7 +232,7 @@ namespace Rar.Model
                 XElement el = (XElement)node;
                 RarTurnoverData data = new RarTurnoverData();
                 data.Subdevision = subdevision;
-                data.ProductionSortID = (int)el.Attribute("П000000000003");
+                data.ProductionSortID = (string)el.Attribute("П000000000003");
                 string producterID = (string)el.Element("СведПроизвИмпорт").Attribute("ИдПроизвИмп");
                 data.Manufacturer = formF6.ManufacturersList.Where(p => p.ID == producterID).First();
                 string buyerID = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдПолучателя");

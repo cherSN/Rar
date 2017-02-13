@@ -18,9 +18,9 @@ namespace Rar.Model
         public string Version { set; get; }
         public string ProgramName { set; get; }
         public string FormNumber { set; get; }
-        public int ReportPeriod { set; get; }
-        public int YearReport { set; get; }
-        public int CorrectionNumber { set; get; }
+        public string ReportPeriod { set; get; }
+        public string YearReport { set; get; }
+        public string CorrectionNumber { set; get; }
         public RarOurCompany OurCompany { set; get; }
         public List<RarCompany> BuyersList { set; get; }
         public List<RarCompany> ManufacturersList { set; get; }
@@ -38,9 +38,9 @@ namespace Rar.Model
             Version = "NoVersion";
             ProgramName = "NoProgramName";
             FormNumber = "NoFormNumber";
-            ReportPeriod = 0;
-            YearReport = 0;
-            CorrectionNumber = 999;
+            ReportPeriod = "No";
+            YearReport = "No";
+            CorrectionNumber = "";
         }
         #endregion
 
@@ -49,15 +49,15 @@ namespace Rar.Model
             BuyersList.Clear();
             ManufacturersList.Clear();
             TurnoverDataList.Clear();
-            try
-            {
+            //try
+            //{
                 ParserF6.Parse(filename, this);
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                MessageBox.Show(ex.Message);
-            }
+            //    MessageBox.Show(ex.Message);
+            //}
 
         }
 

@@ -11,9 +11,9 @@ namespace Rar.Model
         #region - Public Properties -
         public string ID { set; get; }
         public string Name { set; get; }
-        public int INN { set; get; }
-        public int KPP { set; get; }
-        public int CounryID { set; get; }
+        public string INN { set; get; }
+        public string KPP { set; get; }
+        public string CounryID { set; get; }
         public RarAdress Adress { set; get; }
         public List<RarLicense> LicensesList { set; get; }
         #endregion

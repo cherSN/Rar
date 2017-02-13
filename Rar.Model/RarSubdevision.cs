@@ -10,7 +10,7 @@ namespace Rar.Model
     {
         #region - Public Properties -
         public string Name { set; get; }
-        public int KPP { set; get; }
+        public string KPP { set; get; }
         public RarAdress Adress { set; get; }
         #endregion
         #region - Constructor -

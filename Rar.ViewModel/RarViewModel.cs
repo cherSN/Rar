@@ -19,7 +19,8 @@ namespace Rar.ViewModel
     {
         #region  - Private Fields -
         private RarFormF6 _RarFile;
-
+        private ObservableCollection<RarCompany> buyersList;
+        private ObservableCollection<RarTurnoverData> turnoverDataList;
         #endregion
 
         #region - Public Properties -
@@ -68,7 +69,7 @@ namespace Rar.ViewModel
                 OnPropertyChanged("FormNumber");
             }
         }
-        public int ReportPeriod
+        public string ReportPeriod
         {
             get { return _RarFile.ReportPeriod; }
             set
@@ -77,7 +78,7 @@ namespace Rar.ViewModel
                 OnPropertyChanged("ReportPeriod");
             }
         }
-        public int YearReport
+        public string YearReport
         {
             get { return _RarFile.YearReport; }
             set
@@ -86,7 +87,7 @@ namespace Rar.ViewModel
                 OnPropertyChanged("YearReport");
             }
         }
-        public int CorrectionNumber
+        public string CorrectionNumber
         {
             get { return _RarFile.CorrectionNumber; }
             set
@@ -109,9 +110,35 @@ namespace Rar.ViewModel
 
             }
         }
-        public ObservableCollection<RarCompany> BuyersList { get { return new ObservableCollection<RarCompany>(_RarFile.BuyersList); } }
+
+        public ObservableCollection<RarCompany> BuyersList
+        {
+            get
+            {
+                return buyersList;
+            }
+
+            set
+            {
+                buyersList = value;
+                //OnPropertyChanged("BuyersList");
+            }
+        }
         public ObservableCollection<RarCompany> ManufacturersList { get { return new ObservableCollection<RarCompany>(_RarFile.ManufacturersList); } }
-        public ObservableCollection<RarTurnoverData> TurnoverDataList { get { return new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList); } }
+        public ObservableCollection<RarTurnoverData> TurnoverDataList
+        {
+            get
+            {
+                return turnoverDataList;
+            }
+
+            set
+            {
+                turnoverDataList = value;
+                OnPropertyChanged("TurnoverDataList");
+
+            }
+        }
         public ICollectionView TurnoverDataListView {
             get
             {
@@ -127,7 +154,7 @@ namespace Rar.ViewModel
         void viewSource_Filter(object sender, FilterEventArgs e)
         {
             //e.Accepted = ((RarTurnoverData)e.Item).IndexOf(filter.Text) >= 0;
-            //return true;
+            e.Accepted = true;
         }
         #region - Constructor -
         public RarViewModel()
@@ -150,6 +177,9 @@ namespace Rar.ViewModel
                 return _openFileCommand;
             }
         }
+
+
+
         public bool CanOpenFile()
         {
             return true;
@@ -160,6 +190,8 @@ namespace Rar.ViewModel
             if (openFileDialog.ShowDialog() == true)
             {
                 _RarFile.LoadF6(openFileDialog.FileName);
+                TurnoverDataList = new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList);
+                BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
                 UpdateAll();
             }
         } 
@@ -175,6 +207,9 @@ namespace Rar.ViewModel
             OnPropertyChanged("YearReport");
             OnPropertyChanged("CorrectionNumber");
             OnPropertyChanged("OurCompany");
+            //OnPropertyChanged("TurnoverDataList");
+            //OnPropertyChanged("BuyersList");
+
             OnCollectionChanged();
             
         }
