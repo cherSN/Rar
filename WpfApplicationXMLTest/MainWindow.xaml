@@ -81,7 +81,7 @@
                 </ListView.View>
             </ListView>
             <GridSplitter Grid.Column="1" ShowsPreview="False" Width="4" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0" />
-            <DataGrid x:Name="dataGridF6" Grid.Column="2" ItemsSource="{Binding TurnoverDataList}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
+            <DataGrid x:Name="dataGridF6" Grid.Column="2" ItemsSource="{Binding TurnoverDataCollectionViewSource.View}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
                     <DataGridTextColumn Binding="{Binding Path=ProductionSortID}" Header="Код" ClipboardContentBinding="{x:Null}" MinWidth="40"/>

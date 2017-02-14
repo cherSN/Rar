@@ -183,7 +183,9 @@ namespace Rar.ViewModel
         void viewSource_Filter(object sender, FilterEventArgs e)
         {
             //e.Accepted = ((RarTurnoverData)e.Item).IndexOf(filter.Text) >= 0;
-            e.Accepted = true;
+            RarTurnoverData dt= (RarTurnoverData)e.Item;
+            if (dt.ProductionSortID == "200") e.Accepted = true;
+            else e.Accepted = false;
         }
         #region - Constructor -
         public RarViewModel()
