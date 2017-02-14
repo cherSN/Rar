@@ -223,6 +223,8 @@ namespace Rar.ViewModel
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
+                //ParserF6.GetAlcoCodesListFromXSD();
+
                 _RarFile.LoadF6(openFileDialog.FileName);
                 TurnoverDataList = new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList);
                 BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);

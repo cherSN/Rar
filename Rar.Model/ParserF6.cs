@@ -37,6 +37,23 @@ namespace Rar.Model
             else return true;
         }
 
+        public static List<string> GetAlcoCodesListFromXSD()
+        {
+            List<string> listString = new List<string>();
+            string xsdForm6 =Rar.Model.Properties.Resources.xsd_F6_010117;
+            XDocument xdoc = XDocument.Load(XmlReader.Create(new StringReader(xsdForm6)));
+
+            XElement el = xdoc.Descendants().Where(item=> (item.Attribute("name") != null) && (item.Attribute("name").Value == "П000000000003")).FirstOrDefault();
+            XElement restriction = el.Element("{http://www.w3.org/2001/XMLSchema}simpleType").Element("{http://www.w3.org/2001/XMLSchema}restriction");
+            foreach (XNode node in restriction.Elements("{http://www.w3.org/2001/XMLSchema}enumeration"))
+            {
+                XElement elAlcoCode = node as XElement;
+                string val = (elAlcoCode.Attribute("value")).Value;
+                listString.Add(val);
+            }
+            return listString;
+        }
+
         public static void Parse(string fileName, RarFormF6 formF6)
         {
             XDocument xdoc = XDocument.Load(fileName);
