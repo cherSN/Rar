@@ -160,6 +160,8 @@ namespace Rar.ViewModel
             get
             {
                 return turnoverDataCollectionViewSource;
+
+                //CollectionViewSource cvs= new CollectionViewSource();
             }
 
             set
@@ -184,7 +186,7 @@ namespace Rar.ViewModel
         {
             //e.Accepted = ((RarTurnoverData)e.Item).IndexOf(filter.Text) >= 0;
             RarTurnoverData dt= (RarTurnoverData)e.Item;
-            if (dt.ProductionSortID == "200") e.Accepted = true;
+            if (dt.AlcoCode == "200") e.Accepted = true;
             else e.Accepted = false;
         }
         #region - Constructor -
@@ -226,7 +228,9 @@ namespace Rar.ViewModel
                 BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
                 ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
                 TurnoverDataCollectionViewSource.Source = _RarFile.TurnoverDataList;
-                TurnoverDataCollectionViewSource.Filter += viewSource_Filter;
+                //TurnoverDataCollectionViewSource.GroupDescriptions.Add(new PropertyGroupDescription("Buyer"));
+                TurnoverDataCollectionViewSource.SortDescriptions.Add(new SortDescription("ProductionSortID", ListSortDirection.Ascending));
+                //TurnoverDataCollectionViewSource.Filter += viewSource_Filter;
                 UpdateAll();
             }
         } 

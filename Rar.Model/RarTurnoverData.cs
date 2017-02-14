@@ -9,7 +9,7 @@ namespace Rar.Model
     public class RarTurnoverData
     {
         #region - Public Properties -
-        public string ProductionSortID { set; get; }
+        public string AlcoCode { set; get; }
         public DateTime NotificationDate { set; get; }
         public string NotificationNumber { set; get; }
         public double NotificationTurnover { set; get; }

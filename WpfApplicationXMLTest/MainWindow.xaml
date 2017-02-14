@@ -46,13 +46,12 @@
                     </ComboBox>
                     <Label Content="Дата:" HorizontalAlignment="Left"  VerticalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="3" />
                     <TextBox HorizontalAlignment="Left"   Text="{Binding DocumentDate, StringFormat=\{0:d\}}" VerticalAlignment="Center" MinWidth="80" Margin="3"/>
-                </StackPanel>
-                <StackPanel  Orientation="Horizontal">
                     <Label Content="Версия:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" Padding="3,0,0,0" />
                     <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding Version}" VerticalAlignment="Center"  MinWidth="40"/>
                     <Label Content="Программа:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                     <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding ProgramName}" VerticalAlignment="Center" MinWidth="400"/>
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Форма №:" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Center" Padding="3,0,0,0"/>
                     <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding FormNumber}" VerticalAlignment="Center" MinWidth="60"/>
@@ -72,19 +71,19 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <ListView ItemsSource="{Binding BuyersList}" Grid.Column="0"   MinWidth="200">
-                <ListView.View>
+                <!--<ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Имя</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="200">Имя</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=INN}" Width="80">ИНН</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=KPP}" Width="80" >КПП</GridViewColumn>
                     </GridView>
-                </ListView.View>
+                </ListView.View>-->
             </ListView>
             <GridSplitter Grid.Column="1" ShowsPreview="False" Width="4" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0" />
             <DataGrid x:Name="dataGridF6" Grid.Column="2" ItemsSource="{Binding TurnoverDataCollectionViewSource.View}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение" ClipboardContentBinding="{x:Null}" MinWidth="60"/>
-                    <DataGridTextColumn Binding="{Binding Path=ProductionSortID}" Header="Код" ClipboardContentBinding="{x:Null}" MinWidth="40"/>
+                    <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение"  MinWidth="60"/>
+                    <DataGridTextColumn Binding="{Binding Path=AlcoCode}" Header="Код"  MinWidth="40"/>
                     <DataGridComboBoxColumn ItemsSource="{Binding ManufacturersList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Manufacturer}" Header="Производитель"/>
                     <DataGridComboBoxColumn ItemsSource="{Binding BuyersList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Buyer}" Header="Покупатель"/>
                     <DataGridTemplateColumn  Header="Дата"  MinWidth="60">
@@ -103,6 +102,17 @@
                     <DataGridTextColumn Binding="{Binding Path=DocumentNumber}" Header="№ Док"  MinWidth="60"/>
                     <DataGridTextColumn Binding="{Binding Path=Turnover , StringFormat=\{0:F5\}}" Header="Далы" ElementStyle="{StaticResource DoubleGridColumn}" ClipboardContentBinding="{x:Null}" MinWidth="70" />
                 </DataGrid.Columns>
+                <!--<DataGrid.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=Buyer}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>                        
+                    </GroupStyle>
+                </DataGrid.GroupStyle>-->
             </DataGrid>
         </Grid>
     </DockPanel>

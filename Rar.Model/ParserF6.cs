@@ -227,37 +227,53 @@ namespace Rar.Model
             //subdevision.ReturnPresented = (bool)turnoverdata.Attribute("НаличиеВозврата");
             subdevision.Adress = SetupAdress(turnoverdata.Element("АдрОрг"));
             formF6.OurCompany.SubdevisionList.Add(subdevision);
-            foreach (XNode node in turnoverdata.Elements("Оборот"))
+            foreach (XNode nodeAlcoCode in turnoverdata.Elements("Оборот"))
             {
-                XElement el = (XElement)node;
-                RarTurnoverData data = new RarTurnoverData();
-                data.Subdevision = subdevision;
-                data.ProductionSortID = (string)el.Attribute("П000000000003");
-                string producterID = (string)el.Element("СведПроизвИмпорт").Attribute("ИдПроизвИмп");
-                data.Manufacturer = formF6.ManufacturersList.Where(p => p.ID == producterID).First();
-                string buyerID = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдПолучателя");
-                data.Buyer = formF6.BuyersList.Where(p => p.ID == producterID).First();
-                string licenseID = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Attribute("ИдЛицензии");
-
-                RarLicense l = null;
-                foreach (RarCompany item in formF6.BuyersList)
+                XElement elAlcoCode = (XElement)nodeAlcoCode;
+                foreach (XNode nodeManufacturer in elAlcoCode.Elements("СведПроизвИмпорт"))
                 {
-                    l = item.LicensesList.Where(s => s.ID == licenseID).FirstOrDefault();
-                    if (l != null) break;
+                    XElement elManufacturer = (XElement)nodeManufacturer;
+                    foreach (XNode nodeBuyer in elManufacturer.Elements("Получатель"))
+                    {
+                        XElement elBuyer = (XElement)nodeBuyer;
+                        foreach (XNode nodeDocument in elBuyer.Elements("Поставка"))
+                        {
+                            XElement elDocument = (XElement)nodeDocument;
+
+                            RarTurnoverData data = new RarTurnoverData();
+                            data.Subdevision = subdevision;
+                            data.AlcoCode = (string)elAlcoCode.Attribute("П000000000003");
+
+                            string producterID = (string)elManufacturer.Attribute("ИдПроизвИмп");
+                            data.Manufacturer = formF6.ManufacturersList.Where(p => p.ID == producterID).First();
+
+                            string buyerID = (string)elBuyer.Attribute("ИдПолучателя");
+                            data.Buyer = formF6.BuyersList.Where(p => p.ID == producterID).First();
+
+                            string licenseID = (string)elBuyer.Attribute("ИдЛицензии");
+
+                            RarLicense l = null;
+                            foreach (RarCompany item in formF6.BuyersList)
+                            {
+                                l = item.LicensesList.Where(s => s.ID == licenseID).FirstOrDefault();
+                                if (l != null) break;
+                            }
+
+                            if (l != null) data.License = l;
+
+                            //data.NotificationDate=      DateTime.Parse(el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015").Value);
+                            //data.NotificationNumber =   (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000016");
+                            //data.NotificationTurnover = (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000017");
+                            data.DocumentDate = DateTime.Parse(elDocument.Attribute("П000000000018").Value);
+                            data.DocumentNumber = (string)elDocument.Attribute("П000000000019");
+                            //data.CustomsDeclarationNumber = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000020");
+                            data.Turnover = (double)elDocument.Attribute("П000000000021");
+                            formF6.TurnoverDataList.Add(data);
+                        }
+                    }
                 }
 
-                if (l != null) data.License = l;
-
-                //data.NotificationDate=      DateTime.Parse(el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015").Value);
-                //data.NotificationNumber =   (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000016");
-                //data.NotificationTurnover = (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000017");
-                data.DocumentDate = DateTime.Parse(el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000018").Value);
-                data.DocumentNumber = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000019");
-                //data.CustomsDeclarationNumber = (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000020");
-                data.Turnover = (double)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000021");
-                formF6.TurnoverDataList.Add(data);
             }
-
         }
         private static void SetupLisences(RarCompany rc, XElement lisenses)
         {
