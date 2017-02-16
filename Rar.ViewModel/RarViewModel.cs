@@ -23,7 +23,7 @@ namespace Rar.ViewModel
         private ObservableCollection<RarCompany> buyersList;
         private ObservableCollection<RarCompany> manufacturersList;
         private ObservableCollection<RarTurnoverData> turnoverDataList;
-        private CollectionViewSource turnoverDataCollectionViewSource;
+        private ListCollectionView turnoverDataListCollectionView;
         #endregion
 
         #region - Public Properties -
@@ -167,36 +167,40 @@ namespace Rar.ViewModel
 
             }
         }
-        public CollectionViewSource TurnoverDataCollectionViewSource
+      
+        public ListCollectionView TurnoverDataListCollectionView
         {
             get
             {
-                return turnoverDataCollectionViewSource;
-
-                //CollectionViewSource cvs= new CollectionViewSource();
+                return turnoverDataListCollectionView;
             }
 
             set
             {
-                turnoverDataCollectionViewSource = value;
-                //OnPropertyChanged("TurnoverDataListView");
+                turnoverDataListCollectionView = value;
+                OnPropertyChanged("TurnoverDataListCollectionView");
+
             }
         }
         #endregion
 
-        void viewSource_Filter(object sender, FilterEventArgs e)
+        private bool viewSource_Filter(object item)
         {
-            //e.Accepted = ((RarTurnoverData)e.Item).IndexOf(filter.Text) >= 0;
-            RarTurnoverData dt= (RarTurnoverData)e.Item;
-            if (dt.AlcoCode == "200") e.Accepted = true;
-            else e.Accepted = false;
+            RarTurnoverData dt = (RarTurnoverData)item;
+            if (dt.AlcoCode == "200") return true;
+            else return false;
         }
+
         #region - Constructor -
         public RarViewModel()
         {
             _RarFile = new RarFormF6();
             AlcoCodesList = new ObservableCollection<string>(ParserF6.GetAlcoCodesListFromXSD());
-            TurnoverDataCollectionViewSource = new CollectionViewSource();
+            TurnoverDataList = new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList);
+            BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
+            ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
+            TurnoverDataListCollectionView = new ListCollectionView(TurnoverDataList);
+
         }
         #endregion
 
@@ -231,10 +235,10 @@ namespace Rar.ViewModel
                 BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
                 ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
 
-                TurnoverDataCollectionViewSource.Source = _RarFile.TurnoverDataList;
-                TurnoverDataCollectionViewSource.GroupDescriptions.Add(new PropertyGroupDescription("Subdevision"));
-                TurnoverDataCollectionViewSource.SortDescriptions.Add(new SortDescription("AlcoCode", ListSortDirection.Ascending));
-                //TurnoverDataCollectionViewSource.Filter += viewSource_Filter;
+                TurnoverDataListCollectionView = new ListCollectionView(TurnoverDataList);
+                //TurnoverDataListCollectionView.GroupDescriptions.Add(new PropertyGroupDescription("AlcoCode"));
+                TurnoverDataListCollectionView.SortDescriptions.Add(new SortDescription("AlcoCode", ListSortDirection.Ascending));
+                TurnoverDataListCollectionView.Filter = viewSource_Filter;
 
                 UpdateAll();
             }

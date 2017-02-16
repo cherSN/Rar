@@ -16,6 +16,18 @@
             <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
             <Setter Property="TextBlock.Margin" Value="5,0,5,0" />
         </Style>
+        <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}" >
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding AlcoCode}"/>
+                            <ItemsPresenter/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!--<CollectionViewSource Source="{StaticResource rarViewModel.TurnoverDataCollectionViewSource}" x:Key="turnoverView">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Subdevision" />
@@ -85,19 +97,16 @@
                 </ListView.View>-->
             </ListView>
             <GridSplitter Grid.Column="1" ShowsPreview="False" Width="4" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0" />
-            <DataGrid x:Name="dataGridF6" Grid.Column="2" ItemsSource="{Binding TurnoverDataCollectionViewSource.View}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
-                <!--<DataGrid.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    --><!--<TextBlock Text="{Binding Path=Subdevision}"/>--><!--
-                                    <TextBlock Text="FFFFTF"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>                        
+            <DataGrid x:Name="dataGridF6" Grid.Column="2" ItemsSource="{Binding TurnoverDataListCollectionView}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
+                <DataGrid.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <DataGridRowsPresenter/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
                     </GroupStyle>
-                </DataGrid.GroupStyle>-->
+                </DataGrid.GroupStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение"  MinWidth="60"/>
                     <DataGridComboBoxColumn ItemsSource="{Binding AlcoCodesList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Path=AlcoCode}" Header="Код"  MinWidth="40"/>
