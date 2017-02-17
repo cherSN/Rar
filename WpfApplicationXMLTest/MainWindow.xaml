@@ -111,7 +111,7 @@
                                         <ControlTemplate TargetType="{x:Type GroupItem}">
                                             <StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Name}" />
+                                                    <TextBlock Text="{Binding Name}" Margin="5,0,0,0" />
                                                     <TextBlock Text="{Binding ItemCount, StringFormat=Count: {0}}" Margin="30,0,0,0" />
                                                 </StackPanel>
                                                 <ItemsPresenter />

@@ -17,7 +17,11 @@ namespace Rar.Model
         public RarSubdevision()
         {
             Adress = new RarAdress();
-        } 
+        }
         #endregion
+        public override string ToString()
+        {
+            return Name + " КПП: " + KPP + " " + Adress.ToString();
+        }
     }
 }
