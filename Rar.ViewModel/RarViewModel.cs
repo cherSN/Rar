@@ -24,6 +24,7 @@ namespace Rar.ViewModel
         private ObservableCollection<RarCompany> manufacturersList;
         private ObservableCollection<RarTurnoverData> turnoverDataList;
         private ListCollectionView turnoverDataListCollectionView;
+
         #endregion
 
         #region - Public Properties -
@@ -114,6 +115,9 @@ namespace Rar.ViewModel
             }
         }
 
+
+        //public RarCompany SelectedBuyer;
+
         public ObservableCollection<string> AlcoCodesList
         {
             get
@@ -199,8 +203,6 @@ namespace Rar.ViewModel
             TurnoverDataList = new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList);
             BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
             ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
-            TurnoverDataListCollectionView = new ListCollectionView(TurnoverDataList);
-
         }
         #endregion
 
@@ -228,7 +230,6 @@ namespace Rar.ViewModel
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
-                //ParserF6.GetAlcoCodesListFromXSD();
 
                 _RarFile.LoadF6(openFileDialog.FileName);
                 TurnoverDataList = new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList);
