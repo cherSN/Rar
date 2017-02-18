@@ -53,9 +53,23 @@
             </Grid.ColumnDefinitions>
             <ListView ItemsSource="{Binding BuyersList}" Grid.Column="0"   MinWidth="200" SelectionChanged="ListView_SelectionChanged" 
                       SelectedItem="{Binding SelectedBuyer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Background" Value="White"/>
+                        <!--<Setter Property="Margin" Value="5"/>
+                        <Setter Property="Padding" Value="5"/>-->
+                        <Style.Triggers>
+                            <DataTrigger  Value="False" Binding="{Binding IsUsed}">
+                                <Setter Property="Background" Value="LightYellow"/>
+                                <!--<Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="BorderBrush" Value="Black"/>-->
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=IsUsed}" Width="20">+</GridViewColumn>                        
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Width="40">№</GridViewColumn>                        
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="200">Имя</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=INN}" Width="80">ИНН</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=KPP}" Width="80" >КПП</GridViewColumn>

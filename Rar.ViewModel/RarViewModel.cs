@@ -252,7 +252,10 @@ namespace Rar.ViewModel
 
                 _RarFile.LoadF6(openFileDialog.FileName);
                 TurnoverDataList = new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList);
+                //BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
+                _RarFile.BuyersList.Sort( (s1, s2) => String.Compare(s1.Name, s2.Name) );
                 BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
+
                 ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
 
                 TurnoverDataListCollectionView = new ListCollectionView(TurnoverDataList);
