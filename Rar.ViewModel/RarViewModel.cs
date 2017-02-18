@@ -24,7 +24,7 @@ namespace Rar.ViewModel
         private ObservableCollection<RarCompany> manufacturersList;
         private ObservableCollection<RarTurnoverData> turnoverDataList;
         private ListCollectionView turnoverDataListCollectionView;
-
+        private RarCompany selectedBuyer;
         #endregion
 
         #region - Public Properties -
@@ -116,7 +116,7 @@ namespace Rar.ViewModel
         }
 
 
-        //public RarCompany SelectedBuyer;
+        
 
         public ObservableCollection<string> AlcoCodesList
         {
@@ -186,12 +186,29 @@ namespace Rar.ViewModel
 
             }
         }
+
+        public RarCompany SelectedBuyer
+        {
+            get
+            {
+                return selectedBuyer;
+            }
+
+            set
+            {
+                selectedBuyer = value;
+                OnPropertyChanged("SelectedBuyer");
+
+            }
+        }
         #endregion
 
-        private bool viewSource_Filter(object item)
+        private bool Buyer_Filter(object item)
         {
+            if (SelectedBuyer == null) return true;
             RarTurnoverData dt = (RarTurnoverData)item;
-            if (dt.AlcoCode == "200") return true;
+            if (dt.Buyer == SelectedBuyer)
+                return true;
             else return false;
         }
 
@@ -221,6 +238,8 @@ namespace Rar.ViewModel
             }
         }
 
+
+
         public bool CanOpenFile()
         {
             return true;
@@ -237,13 +256,34 @@ namespace Rar.ViewModel
                 ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
 
                 TurnoverDataListCollectionView = new ListCollectionView(TurnoverDataList);
-                TurnoverDataListCollectionView.GroupDescriptions.Add(new PropertyGroupDescription("Subdevision"));
+                //TurnoverDataListCollectionView.GroupDescriptions.Add(new PropertyGroupDescription("Subdevision"));
                 TurnoverDataListCollectionView.SortDescriptions.Add(new SortDescription("DocumentNumber", ListSortDirection.Ascending));
-                //TurnoverDataListCollectionView.Filter = viewSource_Filter;
+                TurnoverDataListCollectionView.Filter = Buyer_Filter;
 
                 UpdateAll();
             }
-        } 
+        }
+
+        //private RelayCommand _FilterCommand;
+
+        //public ICommand FilterCommand
+        //{
+        //    get
+        //    {
+        //        if (_FilterCommand == null)
+        //        {
+        //            _FilterCommand = new RelayCommand(param => FilterBuyer(), param => CanOpenFile());
+        //        }
+        //        return _openFileCommand;
+        //    }
+        //}
+
+
+
+        //public bool CanOpenFile()
+        //{
+        //    return true;
+        //}
         #endregion
 
         private void UpdateAll()

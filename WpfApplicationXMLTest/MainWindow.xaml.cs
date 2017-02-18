@@ -63,6 +63,14 @@ namespace Rar.ViewWpf
 
 
         }
+
+
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Rar.ViewModel.RarViewModel vm = (Rar.ViewModel.RarViewModel)Application.Current.Resources["rarViewModel"];
+            vm.TurnoverDataListCollectionView.Refresh();
+        }
     }
 
   

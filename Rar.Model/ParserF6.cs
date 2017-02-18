@@ -77,7 +77,7 @@ namespace Rar.Model
             XElement references = root.Element("Справочники");
             SetupBuyers(references, formF6);
             SetupManufacturers(references, formF6);
-            SetupFormData(root.Element("Документ").Element("ОбъемОборота"), formF6);
+            SetupTurnoverData(root.Element("Документ").Element("ОбъемОборота"), formF6);
         }
 
         //private static int GetIntAttribute(XElement elm, string attribute)
@@ -235,7 +235,7 @@ namespace Rar.Model
 
 
         }
-        private static void SetupFormData(XElement turnoverdata, RarFormF6 formF6)
+        private static void SetupTurnoverData(XElement turnoverdata, RarFormF6 formF6)
         {
             RarSubdevision subdevision = new RarSubdevision();
             subdevision.Name = (string)turnoverdata.Attribute("Наим");
@@ -266,6 +266,7 @@ namespace Rar.Model
 
                             string buyerID = (string)elBuyer.Attribute("ИдПолучателя");
                             data.Buyer = formF6.BuyersList.Where(p => p.ID == producterID).First();
+                            data.Buyer.IsUsed = true;
 
                             string licenseID = (string)elBuyer.Attribute("ИдЛицензии");
 

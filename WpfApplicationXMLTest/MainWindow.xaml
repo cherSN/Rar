@@ -17,26 +17,7 @@
             <Setter Property="TextBlock.TextWrapping" Value="NoWrap"/>
             <Setter Property="TextBlock.Margin" Value="5,0,5,0" />
         </Style>
-        <!--<Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}" >
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}"/>
-                            <ItemsPresenter/>
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-        <!--<CollectionViewSource Source="{Binding TurnoverDataList}" x:Key="turnoverView">
-            <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="DocumentNumber"/>
-            </CollectionViewSource.SortDescriptions>
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="AlcoCode" />
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>-->
+
     </Window.Resources>
 
     <DockPanel>
@@ -46,34 +27,14 @@
             </MenuItem>
         </Menu>
         <Border BorderThickness="1" CornerRadius="5" BorderBrush="Black" Padding="5" Margin="5" DockPanel.Dock="Top" >
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
+            <WrapPanel Orientation="Horizontal">
                     <Label x:Name="labelPartner" Content="Контрагент:" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"  Padding="3,0,0,0" VerticalContentAlignment="Center" Margin="3"/>
-                    <ComboBox x:Name="comboBoxPartner"  ItemsSource="{Binding BuyersList}" VerticalAlignment="Center" HorizontalAlignment="Left" MaxDropDownHeight="500" MinWidth="400" Margin="3"  >
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid ShowGridLines="False">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="220" />
-                                        <ColumnDefinition Width="80" />
-                                        <ColumnDefinition Width="80" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Name}" Grid.Column="0" Margin="5,0,0,0"  TextWrapping="Wrap" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding INN}"  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding KPP}"  Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
                     <Label Content="Дата:" HorizontalAlignment="Left"  VerticalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="3" />
                     <TextBox HorizontalAlignment="Left"   Text="{Binding DocumentDate, StringFormat=\{0:d\}}" VerticalAlignment="Center" MinWidth="80" Margin="3"/>
                     <Label Content="Версия:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" Padding="3,0,0,0" />
                     <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding Version}" VerticalAlignment="Center"  MinWidth="40"/>
                     <Label Content="Программа:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                     <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding ProgramName}" VerticalAlignment="Center" MinWidth="400"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
                     <Label Content="Форма №:" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Center" Padding="3,0,0,0"/>
                     <TextBox HorizontalAlignment="Left" Margin="3"  Text="{Binding FormNumber}" VerticalAlignment="Center" MinWidth="60"/>
                     <Label Content="Период:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center"/>
@@ -82,8 +43,7 @@
                     <TextBox HorizontalAlignment="Left"  Margin="3" Text="{Binding YearReport}" VerticalAlignment="Center" MinWidth="60"/>
                     <Label Content="Корректировка:" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                     <TextBox HorizontalAlignment="Left"  Margin="3"  Text="{Binding CorrectionNumber}" VerticalAlignment="Center" MinWidth="60"/>
-                </StackPanel>
-            </StackPanel>
+            </WrapPanel>
         </Border>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
@@ -91,40 +51,25 @@
                 <ColumnDefinition Width="4"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <ListView ItemsSource="{Binding BuyersList}" Grid.Column="0"   MinWidth="200">
-                <!--<ListView.View>
+            <ListView ItemsSource="{Binding BuyersList}" Grid.Column="0"   MinWidth="200" SelectionChanged="ListView_SelectionChanged" 
+                      SelectedItem="{Binding SelectedBuyer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.View>
                     <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=IsUsed}" Width="20">+</GridViewColumn>                        
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="200">Имя</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=INN}" Width="80">ИНН</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=KPP}" Width="80" >КПП</GridViewColumn>
                     </GridView>
-                </ListView.View>-->
+                </ListView.View>
             </ListView>
             <GridSplitter Grid.Column="1" ShowsPreview="False" Width="4" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0" />
-            <DataGrid x:Name="dataGridF6" Grid.Column="2" ItemsSource="{Binding TurnoverDataListCollectionView}" Margin="0,0,0,0" CanUserAddRows="False" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"   >
-                <DataGrid.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.ContainerStyle>
-                            <Style TargetType="{x:Type GroupItem}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type GroupItem}">
-                                            <StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Name}" Margin="5,0,0,0" />
-                                                    <TextBlock Text="{Binding ItemCount, StringFormat=Count: {0}}" Margin="30,0,0,0" />
-                                                </StackPanel>
-                                                <ItemsPresenter />
-                                            </StackPanel>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </GroupStyle.ContainerStyle>
-                    </GroupStyle>
-                </DataGrid.GroupStyle>
+            <DataGrid x:Name="dataGridF6" Grid.Column="2" ItemsSource="{Binding TurnoverDataListCollectionView}" Margin="0,0,0,0" 
+                      CanUserAddRows="False" AutoGenerateColumns="False" SelectionUnit="Cell"  SelectedCellsChanged="dataGridF6_SelectedCellsChanged"    >
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=Subdevision.Name}" Header="Подразделение"  MinWidth="60"/>
+                    <DataGridTextColumn Binding="{Binding Path=License.SeriesNumber}" Header="Лицензия"  MinWidth="60"/>
+
                     <DataGridComboBoxColumn ItemsSource="{Binding AlcoCodesList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Path=AlcoCode}" Header="Код"  MinWidth="40"/>
                     <DataGridComboBoxColumn ItemsSource="{Binding ManufacturersList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Manufacturer}" Header="Производитель"/>
                     <DataGridComboBoxColumn ItemsSource="{Binding BuyersList, Source={StaticResource rarViewModel}}" SelectedValueBinding="{Binding Buyer}" Header="Покупатель"/>

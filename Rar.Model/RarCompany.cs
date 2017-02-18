@@ -16,17 +16,17 @@ namespace Rar.Model
         public string CounryID { set; get; }
         public RarAdress Adress { set; get; }
         public List<RarLicense> LicensesList { set; get; }
+        public bool IsUsed { set; get; }
         #endregion
         #region - Constructors -
         public RarCompany()
         {
             Adress = new RarAdress();
             LicensesList = new List<RarLicense>();
+            IsUsed = false;
         }
-        public RarCompany(string name)
+        public RarCompany(string name): base()
         {
-            Adress = new RarAdress();
-            LicensesList = new List<RarLicense>();
             Name = name;
 
         }

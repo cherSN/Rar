@@ -14,7 +14,11 @@ namespace Rar.Model
         public DateTime DateFrom { set; get; }
         public DateTime DateTo { set; get; }
         public string Issuer { set; get; }
-        public string BusinesType { set; get; } 
+        public string BusinesType { set; get; }
         #endregion
+        public override string ToString()
+        {
+            return SeriesNumber + "; " + DateFrom.ToShortDateString() + "-"+DateTo.ToShortDateString();
+        }
     }
 }
