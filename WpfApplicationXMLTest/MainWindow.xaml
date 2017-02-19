@@ -69,7 +69,7 @@
                 </ListView.ItemContainerStyle>
                  <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Width="40">№</GridViewColumn>                        
+                        <!--<GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Width="40">№</GridViewColumn>-->                        
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="200">Имя</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=INN}" Width="80">ИНН</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=KPP}" Width="80" >КПП</GridViewColumn>

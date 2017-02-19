@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rar.ViewModel", "Rar.ViewMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rar.Model", "Rar.Model\Rar.Model.csproj", "{EA01006E-D299-49B8-A299-28E4167824E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rar.ViewWpf1", "Rar.ViewWpf1\Rar.ViewWpf1.csproj", "{8075A054-1E46-4676-86B0-A186477538EC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{EA01006E-D299-49B8-A299-28E4167824E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA01006E-D299-49B8-A299-28E4167824E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA01006E-D299-49B8-A299-28E4167824E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8075A054-1E46-4676-86B0-A186477538EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8075A054-1E46-4676-86B0-A186477538EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8075A054-1E46-4676-86B0-A186477538EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8075A054-1E46-4676-86B0-A186477538EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
