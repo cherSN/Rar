@@ -250,9 +250,17 @@ namespace Rar.Model
                 foreach (XNode nodeManufacturer in elAlcoCode.Elements("СведПроизвИмпорт"))
                 {
                     XElement elManufacturer = (XElement)nodeManufacturer;
+                    string manufacturID = (string)elManufacturer.Attribute("ИдПроизвИмп");
+                    RarCompany manufacturer = formF6.ManufacturersList.Where(p => p.ID == manufacturID).First();
                     foreach (XNode nodeBuyer in elManufacturer.Elements("Получатель"))
                     {
                         XElement elBuyer = (XElement)nodeBuyer;
+                        string buyerID = (string)elBuyer.Attribute("ИдПолучателя");
+                        RarCompany buyer = formF6.BuyersList.Where(p => p.ID == buyerID).First();
+                        buyer.IsUsed = true;
+                        string licenseID = (string)elBuyer.Attribute("ИдЛицензии");
+                        RarLicense license = buyer.LicensesList.Where(s => s.ID == licenseID).FirstOrDefault();
+
                         foreach (XNode nodeDocument in elBuyer.Elements("Поставка"))
                         {
                             XElement elDocument = (XElement)nodeDocument;
@@ -260,24 +268,9 @@ namespace Rar.Model
                             RarTurnoverData data = new RarTurnoverData();
                             data.Subdevision = subdevision;
                             data.AlcoCode = (string)elAlcoCode.Attribute("П000000000003");
-
-                            string producterID = (string)elManufacturer.Attribute("ИдПроизвИмп");
-                            data.Manufacturer = formF6.ManufacturersList.Where(p => p.ID == producterID).First();
-
-                            string buyerID = (string)elBuyer.Attribute("ИдПолучателя");
-                            data.Buyer = formF6.BuyersList.Where(p => p.ID == producterID).First();
-                            data.Buyer.IsUsed = true;
-
-                            string licenseID = (string)elBuyer.Attribute("ИдЛицензии");
-
-                            RarLicense l = null;
-                            foreach (RarCompany item in formF6.BuyersList)
-                            {
-                                l = item.LicensesList.Where(s => s.ID == licenseID).FirstOrDefault();
-                                if (l != null) break;
-                            }
-
-                            if (l != null) data.License = l;
+                            data.Manufacturer = manufacturer;
+                            data.Buyer = buyer;
+                            data.License = license;
 
                             //data.NotificationDate=      DateTime.Parse(el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000015").Value);
                             //data.NotificationNumber =   (string)el.Element("СведПроизвИмпорт").Element("Получатель").Element("Поставка").Attribute("П000000000016");

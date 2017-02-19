@@ -244,6 +244,37 @@ namespace Rar.ViewModel
         {
             return true;
         }
+
+        //private int SortStringsAsNumbers(RarCompany s1, RarCompany s2)
+        //{
+        //    double num1;
+        //    double num2;
+        //   if(Double.TryParse(s1.ID, out num1)) {
+        //        if(Double.TryParse(s2.ID, out num2))
+        //        {
+        //            return num1.CompareTo(num2);
+        //        }
+
+        //    }
+        //    return String.Compare(s1.ID, s2.ID);
+        //}
+
+
+        private int SortStringsAsNumbers(string s1, string s2)
+        {
+            double num1;
+            double num2;
+            if (Double.TryParse(s1, out num1))
+            {
+                if (Double.TryParse(s2, out num2))
+                {
+                    return num1.CompareTo(num2);
+                }
+
+            }
+            return String.Compare(s1, s2);
+        }
+
         private void OpenFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -252,8 +283,9 @@ namespace Rar.ViewModel
 
                 _RarFile.LoadF6(openFileDialog.FileName);
                 TurnoverDataList = new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList);
-                //BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
-                _RarFile.BuyersList.Sort( (s1, s2) => String.Compare(s1.Name, s2.Name) );
+                //_RarFile.BuyersList.Sort( (s1, s2) => String.Compare(s1.Name, s2.Name) );
+                _RarFile.BuyersList.Sort((s1, s2)=>SortStringsAsNumbers(s1.ID, s2.ID));
+
                 BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
 
                 ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
