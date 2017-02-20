@@ -42,29 +42,7 @@ namespace Rar.Model
                 }
             }
         }
-        //private static bool IsDocumentValidOld(XDocument xdoc)
-        //{
-        //    string xsdMarkup = Rar.Model.Properties.Resources.xsd_F6_010117;
-        //    XmlSchemaSet schemas = new XmlSchemaSet();
-        //    schemas.Add("", XmlReader.Create(new StringReader(xsdMarkup)));
 
-        //    bool errors = false;
-        //    List<string> errNodes = new List<string>();
-        //    xdoc.Validate(schemas, (o, ee) =>
-        //    {
-        //        string errNode = ee.Message; //  ((XElement)o).Name.ToString();
-        //        errNodes.Add(errNode);
-        //        errors = true;
-        //    });
-        //    if (errors)
-        //    {
-        //        string mess = "Не соответствует схеме: " + "\n";
-        //        foreach (string item in errNodes) mess = mess + item + "\n";
-        //        //MessageBox.Show(mess);
-        //        return false;
-        //    }
-        //    else return true;
-        //}
 
         public static List<string> GetAlcoCodesListFromXSD()
         {
@@ -91,22 +69,7 @@ namespace Rar.Model
             return listString;
 
         }
-        //public static List<string> GetAlcoCodesListFromXSD()
-        //{
-        //    List<string> listString = new List<string>();
-        //    string xsdForm6 = Rar.Model.Properties.Resources.f6_010117;
-        //    XDocument xdoc = XDocument.Load(XmlReader.Create(new StringReader(xsdForm6)));
 
-        //    XElement el = xdoc.Descendants().Where(item => (item.Attribute("name") != null) && (item.Attribute("name").Value == "П000000000003")).FirstOrDefault();
-        //    XElement restriction = el.Element("{http://www.w3.org/2001/XMLSchema}simpleType").Element("{http://www.w3.org/2001/XMLSchema}restriction");
-        //    foreach (XNode node in restriction.Elements("{http://www.w3.org/2001/XMLSchema}enumeration"))
-        //    {
-        //        XElement elAlcoCode = node as XElement;
-        //        string val = (elAlcoCode.Attribute("value")).Value;
-        //        listString.Add(val);
-        //    }
-        //    return listString;
-        //}
         public static void Parse(string fileName, RarFormF6 formF6)
         {
             XDocument xdoc = XDocument.Load(fileName);
@@ -133,20 +96,42 @@ namespace Rar.Model
             SetupTurnoverData(root.Element("Документ").Element("ОбъемОборота"), formF6);
         }
 
-        //private static int GetIntAttribute(XElement elm, string attribute)
-        //{
-        //    if (elm.Attribute(attribute)==null)
-        //        return 0;
-            
-        //    int result;
-        //    if(int.TryParse(elm.Attribute(attribute).Value, out result)) {
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        return 0;
-        //    } 
-        //}
+
+        private static XElement GetCompanyElement(RarCompany company)
+        {
+            //if (company.CounryID == "643")
+            //{
+                XElement domestic = new XElement("Резидент");
+                return domestic;
+            //}
+
+            //XElement foreigner = new XElement("Иностр",
+            // new XAttribute("П000000000081", company.CounryID));
+
+            //return foreigner;
+
+
+        }
+        public static void SaveCompanies(List<RarCompany> companyList, string filename)
+        {
+            int i = 1;
+            XDocument xdoc = new XDocument(
+                new XDeclaration("1.0", "windows-1251", "yes"),
+                new XElement("Справочники",
+                new XAttribute(XNamespace.Xmlns + "xs", "http://www.w3.org/2001/XMLSchema"),
+                new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                    companyList.Select(p => new XElement("Контрагенты",
+                    new XAttribute("ИдКонтр", i++),
+                    new XAttribute("П000000000007", p.Name),
+                    GetCompanyElement(p))
+                    )
+
+
+
+                )
+            );
+            xdoc.Save(filename);
+        }
 
         private static void SetupOrganization(XElement organization, RarOurCompany OurCompany)
         {
@@ -354,5 +339,9 @@ namespace Rar.Model
 
             }
         }
+
+
+
+
     }
 }

@@ -203,15 +203,6 @@ namespace Rar.ViewModel
         }
         #endregion
 
-        private bool Buyer_Filter(object item)
-        {
-            if (SelectedBuyer == null) return true;
-            RarTurnoverData dt = (RarTurnoverData)item;
-            if (dt.Buyer == SelectedBuyer)
-                return true;
-            else return false;
-        }
-
         #region - Constructor -
         public RarViewModel()
         {
@@ -244,20 +235,6 @@ namespace Rar.ViewModel
         {
             return true;
         }
-
-        //private int SortStringsAsNumbers(RarCompany s1, RarCompany s2)
-        //{
-        //    double num1;
-        //    double num2;
-        //   if(Double.TryParse(s1.ID, out num1)) {
-        //        if(Double.TryParse(s2.ID, out num2))
-        //        {
-        //            return num1.CompareTo(num2);
-        //        }
-
-        //    }
-        //    return String.Compare(s1.ID, s2.ID);
-        //}
 
 
         private int SortStringsAsNumbers(string s1, string s2)
@@ -299,28 +276,48 @@ namespace Rar.ViewModel
             }
         }
 
-        //private RelayCommand _FilterCommand;
+        private RelayCommand _saveCompaniesFileCommand;
 
-        //public ICommand FilterCommand
-        //{
-        //    get
-        //    {
-        //        if (_FilterCommand == null)
-        //        {
-        //            _FilterCommand = new RelayCommand(param => FilterBuyer(), param => CanOpenFile());
-        //        }
-        //        return _openFileCommand;
-        //    }
-        //}
+        public ICommand SaveCompaniesFileCommand
+        {
+            get
+            {
+                if (_saveCompaniesFileCommand == null)
+                {
+                    _saveCompaniesFileCommand = new RelayCommand(param => SaveCompaniesFile(), param => CanSaveCompaniesFile());
+                }
+                return _saveCompaniesFileCommand;
+            }
+        }
 
+        private void SaveCompaniesFile()
+        {
 
+            List<RarCompany> CompaniesList = TurnoverDataList.Where(s => s.Buyer == SelectedBuyer).Select(p => p.Manufacturer).Distinct().ToList();
 
-        //public bool CanOpenFile()
-        //{
-        //    return true;
-        //}
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "Document"; // Default file name
+            saveFileDialog.DefaultExt = ".xml"; // Default file extension
+            saveFileDialog.Filter = "Xml documents (.xml)|*.xml"; // Filter files by extension
+            if (saveFileDialog.ShowDialog() == true)
+                ParserF6.SaveCompanies(CompaniesList, saveFileDialog.FileName);
+            
+        }
+
+        public bool CanSaveCompaniesFile()
+        {
+            return true;
+        }
         #endregion
 
+        private bool Buyer_Filter(object item)
+        {
+            if (SelectedBuyer == null) return true;
+            RarTurnoverData dt = (RarTurnoverData)item;
+            if (dt.Buyer == SelectedBuyer)
+                return true;
+            else return false;
+        }
         private void UpdateAll()
         {
             OnPropertyChanged("DocumentDate");
