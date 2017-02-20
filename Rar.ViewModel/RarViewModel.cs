@@ -319,14 +319,14 @@ namespace Rar.ViewModel
         private void SaveCompaniesFile()
         {
 
-            List<RarCompany> CompaniesList = TurnoverDataList.Where(s => s.Buyer == SelectedBuyer).Select(p => p.Manufacturer).Distinct().ToList();
+            //List<RarCompany> CompaniesList = TurnoverDataList.Where(s => s.Buyer == SelectedBuyer).Select(p => p.Manufacturer).Distinct().ToList();
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = "Document"; // Default file name
             saveFileDialog.DefaultExt = ".xml"; // Default file extension
             saveFileDialog.Filter = "Xml documents (.xml)|*.xml"; // Filter files by extension
             if (saveFileDialog.ShowDialog() == true)
-                ParserF6.SaveCompanies(CompaniesList, saveFileDialog.FileName);
+                ParserF6.SaveCompanies(SavingCompaniesList.ToList(), saveFileDialog.FileName);
             
         }
 

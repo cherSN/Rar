@@ -5,31 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rar.ViewWpf"
         mc:Ignorable="d"
-        Title="SaveCompaniesWindows" Height="350" Width="525">
+        Title="SaveCompaniesWindows"  Height="350" Width="525">
     <Grid>
-        <ListView ItemsSource="{Binding SavingCompaniesList}"  MinWidth="200" >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Background" Value="White"/>
-                    <!--<Setter Property="Margin" Value="5"/>
-                        <Setter Property="Padding" Value="5"/>-->
-                    <Style.Triggers>
-                        <DataTrigger  Value="643" Binding="{Binding CounryID}">
-                            <Setter Property="Background" Value="LightYellow"/>
-                            <!--<Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="BorderBrush" Value="Black"/>-->
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CounryID}" Width="80">Код страны</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="200">Имя</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=INN}" Width="80">ИНН</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=KPP}" Width="80" >КПП</GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DataGrid ItemsSource="{Binding SavingCompaniesList, Mode=TwoWay}" Grid.Row="0" AutoGenerateColumns="False" CanUserAddRows="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Имя"  MinWidth="60"/>
+                <DataGridTextColumn Binding="{Binding INN}" Header="ИНН"  MinWidth="60"/>
+                <DataGridTextColumn Binding="{Binding KPP}" Header="КПП"  MinWidth="60"/>
+                <DataGridTextColumn Binding="{Binding CounryID}" Header="Код страны"  MinWidth="60"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Row="1" Content="Сохранить" HorizontalAlignment="Right" Command="{Binding SaveCompaniesFileCommand}"
+                VerticalAlignment="Bottom" />
+
     </Grid>
 </Window>
