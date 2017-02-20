@@ -97,42 +97,6 @@ namespace Rar.Model
         }
 
 
-        private static XElement GetCompanyElement(RarCompany company)
-        {
-            //if (company.CounryID == "643")
-            //{
-                XElement domestic = new XElement("Резидент");
-                return domestic;
-            //}
-
-            //XElement foreigner = new XElement("Иностр",
-            // new XAttribute("П000000000081", company.CounryID));
-
-            //return foreigner;
-
-
-        }
-        public static void SaveCompanies(List<RarCompany> companyList, string filename)
-        {
-            int i = 1;
-            XDocument xdoc = new XDocument(
-                new XDeclaration("1.0", "windows-1251", "yes"),
-                new XElement("Справочники",
-                new XAttribute(XNamespace.Xmlns + "xs", "http://www.w3.org/2001/XMLSchema"),
-                new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                    companyList.Select(p => new XElement("Контрагенты",
-                    new XAttribute("ИдКонтр", i++),
-                    new XAttribute("П000000000007", p.Name),
-                    GetCompanyElement(p))
-                    )
-
-
-
-                )
-            );
-            xdoc.Save(filename);
-        }
-
         private static void SetupOrganization(XElement organization, RarOurCompany OurCompany)
         {
             OurCompany.Director.Name = (string)organization.Element("ОтветЛицо").Element("Руководитель").Element("Фамилия");
@@ -267,6 +231,7 @@ namespace Rar.Model
                 rc.Name = (string)el.Attribute("П000000000004");
                 rc.INN = (string)el.Attribute("П000000000005");
                 rc.KPP = (string)el.Attribute("П000000000006");
+                
 
                 formF6.ManufacturersList.Add(rc);
             }
@@ -340,6 +305,42 @@ namespace Rar.Model
             }
         }
 
+
+        private static XElement GetCompanyElement(RarCompany company)
+        {
+            if ((company.CounryID == null)||(company.CounryID =="643"))
+            {
+                XElement domestic = new XElement("Резидент");
+            return domestic;
+            }
+
+            XElement foreigner = new XElement("Иностр",
+             new XAttribute("П000000000081", company.CounryID));
+
+            return foreigner;
+
+
+        }
+        public static void SaveCompanies(List<RarCompany> companyList, string filename)
+        {
+            int i = 1;
+            XDocument xdoc = new XDocument(
+                new XDeclaration("1.0", "windows-1251", "yes"),
+                new XElement("Справочники",
+                new XAttribute(XNamespace.Xmlns + "xs", "http://www.w3.org/2001/XMLSchema"),
+                new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                    companyList.Select(p => new XElement("Контрагенты",
+                    new XAttribute("ИдКонтр", i++),
+                    new XAttribute("П000000000007", p.Name),
+                    GetCompanyElement(p))
+                    )
+
+
+
+                )
+            );
+            xdoc.Save(filename);
+        }
 
 
 

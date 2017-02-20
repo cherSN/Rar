@@ -18,6 +18,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
+
 namespace Rar.ViewWpf
 {
     /// <summary>
@@ -68,8 +69,22 @@ namespace Rar.ViewWpf
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Rar.ViewModel.RarViewModel vm = (Rar.ViewModel.RarViewModel)Application.Current.Resources["rarViewModel"];
+
+            //Rar.ViewModel.RarViewModel vm = (Rar.ViewModel.RarViewModel)Application.Current.Resources["rarViewModel"];
+            Rar.ViewModel.RarViewModel vm = DataContext as Rar.ViewModel.RarViewModel;
+            //if (vm!=null)
             vm.TurnoverDataListCollectionView.Refresh();
+            
+           
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Rar.ViewModel.RarViewModel vm = DataContext as Rar.ViewModel.RarViewModel;
+            vm.InitializeCompaniesList();
+            SaveCompaniesWindow saveCompaniesView = new SaveCompaniesWindow { DataContext=vm};
+            saveCompaniesView.Show();
+            
         }
     }
 

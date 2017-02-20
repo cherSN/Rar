@@ -24,7 +24,7 @@
         <Menu x:Name="menu" Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <MenuItem Command="{Binding OpenFileCommand}" Header="Открыть"/>
-                <MenuItem Command="{Binding SaveCompaniesFileCommand}" Header="Сохранить контрагентов"/>
+                <MenuItem Header="Сохранить контрагентов" Click="MenuItem_Click"/>
 
             </MenuItem>
         </Menu>

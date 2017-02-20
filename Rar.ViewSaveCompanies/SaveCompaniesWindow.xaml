@@ -1,0 +1,35 @@
+﻿<Window x:Class="Rar.ViewSaveCompanies.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Rar.ViewSaveCompanies"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <ListView ItemsSource="{Binding CompaniesList}"  MinWidth="200" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Background" Value="White"/>
+                    <!--<Setter Property="Margin" Value="5"/>
+                        <Setter Property="Padding" Value="5"/>-->
+                    <Style.Triggers>
+                        <DataTrigger  Value="False" Binding="{Binding IsUsed}">
+                            <Setter Property="Background" Value="LightYellow"/>
+                            <!--<Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="BorderBrush" Value="Black"/>-->
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <!--<GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Width="40">№</GridViewColumn>-->
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="200">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=INN}" Width="80">ИНН</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=KPP}" Width="80" >КПП</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

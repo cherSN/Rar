@@ -25,6 +25,7 @@ namespace Rar.ViewModel
         private ObservableCollection<RarTurnoverData> turnoverDataList;
         private ListCollectionView turnoverDataListCollectionView;
         private RarCompany selectedBuyer;
+        private ObservableCollection<RarCompany> savingCompaniesList;
         #endregion
 
         #region - Public Properties -
@@ -187,6 +188,21 @@ namespace Rar.ViewModel
             }
         }
 
+        public ObservableCollection<RarCompany> SavingCompaniesList
+        {
+            get
+            {
+                return savingCompaniesList;
+            }
+
+            set
+            {
+                savingCompaniesList = value;
+                OnPropertyChanged("SavingCompaniesList");
+
+            }
+        }
+
         public RarCompany SelectedBuyer
         {
             get
@@ -211,8 +227,16 @@ namespace Rar.ViewModel
             TurnoverDataList = new ObservableCollection<RarTurnoverData>(_RarFile.TurnoverDataList);
             BuyersList = new ObservableCollection<RarCompany>(_RarFile.BuyersList);
             ManufacturersList = new ObservableCollection<RarCompany>(_RarFile.ManufacturersList);
+            SavingCompaniesList = new ObservableCollection<RarCompany>();
         }
         #endregion
+
+        public void InitializeCompaniesList()
+        {
+            List<RarCompany> companiesList = TurnoverDataList.Where(s => s.Buyer == SelectedBuyer).Select(p => p.Manufacturer).Distinct().ToList();
+            SavingCompaniesList = new ObservableCollection<RarCompany>(companiesList);
+
+        }
 
         #region - Commands -
         private RelayCommand _openFileCommand;
@@ -289,6 +313,8 @@ namespace Rar.ViewModel
                 return _saveCompaniesFileCommand;
             }
         }
+
+
 
         private void SaveCompaniesFile()
         {
