@@ -369,45 +369,60 @@ namespace Rar.Model
 
             XDocument xdoc = new XDocument(
                 new XDeclaration("1.0", "windows-1251", "yes"),
-                new XElement("Справочники",
+                new XElement("Файл",
                 new XAttribute("ДатаДок", DateTime.Now.ToShortDateString()),
                 new XAttribute("ВерсФорм", "4.20"),
-                new XAttribute("Декларант", "1C"),
+                new XAttribute("НаимПрог", "1C"),
+                    new XElement("Документ", 
                         GetAlcoCodes(turnoverList)
-                )
+                ))
             );
             xdoc.Save(filename);
         }
 
-        private static XElement GetAlcoCodes(List<RarTurnoverData> turnoverList)
+        private static XElement[] GetAlcoCodes(List<RarTurnoverData> turnoverList)
         {
             int i = 1;
-
             List<string> alcoCodeList = turnoverList.Select(a => a.AlcoCode).Distinct().ToList();
-
-            XElement el = new XElement("Документ", alcoCodeList.Select(p => new XElement("Оборот",
-                new XAttribute("ПN", i++),
-                new XAttribute("П000000000003", p)
-                ))
-                );
-
-            return el;
+            return alcoCodeList.Select(p => 
+                new XElement("Оборот", 
+                new XAttribute("ПN", i++), 
+                new XAttribute("П000000000003", p),
+                    GetManufacturList(turnoverList, p)
+                )
+            ).ToArray();
         }
 
-        private static XElement GetManufacturList(List<RarTurnoverData> turnoverList, string alcoCode)
+        private static XElement [] GetManufacturList(List<RarTurnoverData> turnoverList, string alcoCode)
         {
 
             List<RarTurnoverData> cutTurnoverList = turnoverList.Where(s => s.AlcoCode == alcoCode).ToList();
             List<RarCompany> manufacturList = cutTurnoverList.Select(a => a.Manufacturer).Distinct().ToList();
 
-            XElement el = new XElement("СведПроизвИмпорт", manufacturList.Select(p => new XElement("cc",
+            return manufacturList.Select(p =>
+                new XElement("СведПроизвИмпорт",
                     new XAttribute("NameOrg", p.Name),
                     new XAttribute("INN", p.INN),
-                    new XAttribute("KPP", p.KPP)
-                    ))
-                    );
+                    new XAttribute("KPP", p.KPP),
+                        GetProductList(cutTurnoverList, p)
+                    )
+            ).ToArray();
+        }
 
-            return null;
+
+        private static XElement[] GetProductList(List<RarTurnoverData> turnoverList, RarCompany manufacture)
+        {
+            List<RarTurnoverData> cutTurnoverList = turnoverList.Where(s => s.Manufacturer == manufacture).ToList();
+
+            return cutTurnoverList.Select(p =>
+                new XElement("Продукция",
+                    new XAttribute("П200000000013", p.DocumentDate.ToShortDateString()),
+                    new XAttribute("П200000000014", p.DocumentNumber),
+                    new XAttribute("П200000000015", ""),
+                    new XAttribute("П200000000016", p.Turnover)
+                    )
+            ).ToArray();
+
         }
     }
 }
