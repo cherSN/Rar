@@ -418,7 +418,7 @@ namespace Rar.Model
                 new XElement("Продукция",
                     new XAttribute("П200000000013", p.DocumentDate.ToShortDateString()),
                     new XAttribute("П200000000014", p.DocumentNumber),
-                    new XAttribute("П200000000015", ""),
+                    p.CustomsDeclarationNumber==null ? null : new XAttribute("П200000000015", p.CustomsDeclarationNumber),
                     new XAttribute("П200000000016", p.Turnover)
                     )
             ).ToArray();
