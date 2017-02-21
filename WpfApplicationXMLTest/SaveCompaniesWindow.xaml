@@ -18,10 +18,12 @@
                 <DataGridTextColumn Binding="{Binding INN}" Header="ИНН"  MinWidth="60"/>
                 <DataGridTextColumn Binding="{Binding KPP}" Header="КПП"  MinWidth="60"/>
                 <DataGridTextColumn Binding="{Binding CounryID}" Header="Код страны"  MinWidth="80"/>
+                <DataGridTextColumn Binding="{Binding Adress.RegionId}" Header="Код страны"  MinWidth="80"/>
+
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="1" Content="Сохранить" HorizontalAlignment="Right" Command="{Binding SaveCompaniesFileCommand}"
-                VerticalAlignment="Bottom" />
+        <Button Grid.Row="1" Content="Сохранить" HorizontalAlignment="Right" 
+                VerticalAlignment="Bottom" Command="{Binding SaveCompaniesFileCommand}" />
 
     </Grid>
 </Window>

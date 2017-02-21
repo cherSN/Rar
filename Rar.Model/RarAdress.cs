@@ -22,9 +22,9 @@ namespace Rar.Model
     public class RarAdress
     {
         #region - Public Properties -
-        public int CountryId { set; get; }
-        public int PostCode { set; get; }
-        public int RegionId { set; get; }
+        public string CountryId { set; get; }
+        public string PostCode { set; get; }
+        public string RegionId { set; get; }
         public string District { set; get; }
         public string City { set; get; }
         public string Locality { set; get; }
@@ -49,7 +49,7 @@ namespace Rar.Model
         {
             if (StrictAdress)
             {
-                return CountryId.ToString() + "," + PostCode.ToString() + "," + RegionId.ToString() + "," + District + "," +
+                return CountryId + "," + PostCode + "," + RegionId + "," + District + "," +
                 City + "," + Locality + "," + Street + "," + Building + "," + Block + "," + Litera + "," + Apartment;
             }
             else

@@ -25,6 +25,7 @@
             <MenuItem Header="Файл">
                 <MenuItem Command="{Binding OpenFileCommand}" Header="Открыть"/>
                 <MenuItem Header="Сохранить контрагентов" Click="MenuItem_Click"/>
+                <MenuItem Command="{Binding SaveTurnoverFileCommand}" Header="Сохранить форму 11"/>
 
             </MenuItem>
         </Menu>

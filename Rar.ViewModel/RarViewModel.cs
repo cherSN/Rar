@@ -251,6 +251,7 @@ namespace Rar.ViewModel
                 if (IsInnValid(Inn)&&IsKppValid(Kpp))
                 {
                     company.CounryID = "643";
+                    company.Adress.RegionId = "77";
                 }
 
 
@@ -346,7 +347,7 @@ namespace Rar.ViewModel
             //List<RarCompany> CompaniesList = TurnoverDataList.Where(s => s.Buyer == SelectedBuyer).Select(p => p.Manufacturer).Distinct().ToList();
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = "Document"; // Default file name
+            saveFileDialog.FileName = "Companies"; // Default file name
             saveFileDialog.DefaultExt = ".xml"; // Default file extension
             saveFileDialog.Filter = "Xml documents (.xml)|*.xml"; // Filter files by extension
             if (saveFileDialog.ShowDialog() == true)
@@ -358,7 +359,44 @@ namespace Rar.ViewModel
         {
             return true;
         }
-        #endregion
+
+        private RelayCommand _saveTurnoverFileCommand;
+
+        public ICommand SaveTurnoverFileCommand
+        {
+            get
+            {
+                if (_saveTurnoverFileCommand == null)
+                {
+                    _saveTurnoverFileCommand = new RelayCommand(param => SaveTurnoverFile(), param => CanSaveTurnoverFile());
+                }
+                return _saveTurnoverFileCommand;
+            }
+        }
+
+
+
+        private void SaveTurnoverFile()
+        {
+
+            List<RarTurnoverData> TurnoverList = TurnoverDataList.Where(s => s.Buyer == SelectedBuyer).ToList();
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "Form11"; // Default file name
+            saveFileDialog.DefaultExt = ".xml"; // Default file extension
+            saveFileDialog.Filter = "Xml documents (.xml)|*.xml"; // Filter files by extension
+            if (saveFileDialog.ShowDialog() == true)
+                ParserF6.SaveTurnoverData(TurnoverList, saveFileDialog.FileName);
+
+        }
+
+        public bool CanSaveTurnoverFile()
+        {
+            return true;
+        }
+
+#endregion
+
 
         private bool Buyer_Filter(object item)
         {

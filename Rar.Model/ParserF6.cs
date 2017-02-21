@@ -151,9 +151,9 @@ namespace Rar.Model
         {
             RarAdress adr = new RarAdress();
             adr.StrictAdress = true;
-            adr.CountryId = 643; // ?????????????????????
-            adr.PostCode = (int)adress.Element("Индекс");
-            adr.RegionId = (int)adress.Element("КодРегион");
+            adr.CountryId = "643"; // ?????????????????????
+            adr.PostCode = (string)adress.Element("Индекс");
+            adr.RegionId = (string)adress.Element("КодРегион");
             adr.District = (string)adress.Element("Район");
             adr.City = (string)adress.Element("Город");
             adr.Locality = (string)adress.Element("НаселПункт");
@@ -309,8 +309,8 @@ namespace Rar.Model
         {
             XElement el = new XElement("П000000000008",
                 new XElement("КодСтраны","643"),
-                new XElement("Индекс", ""),
-                new XElement("КодРегион", "77"),
+                new XElement("Индекс", adress.PostCode),
+                new XElement("КодРегион", adress.RegionId),
                 new XElement("Район", adress.District),
                 new XElement("Город", adress.City),
                 new XElement("НаселПункт", adress.Locality),
@@ -350,24 +350,33 @@ namespace Rar.Model
         {
             int i = 1;
             XDocument xdoc = new XDocument(
+                 new XDeclaration("1.0", "windows-1251", "yes"),
+                 new XElement("Файл",
+                 new XAttribute(XNamespace.Xmlns + "xs", "http://www.w3.org/2001/XMLSchema"),
+                 new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                     companyList.Select(p => new XElement("Контрагенты",
+                     new XAttribute("ИдКонтр", i++),
+                     new XAttribute("П000000000007", p.Name),
+                     GetCompanyElement(p))
+                     )
+                 )
+             );
+            xdoc.Save(filename);
+        }
+
+        public static void SaveTurnoverData(List<RarTurnoverData> turnoverList, string filename)
+        {
+            XDocument xdoc = new XDocument(
                 new XDeclaration("1.0", "windows-1251", "yes"),
                 new XElement("Справочники",
-                new XAttribute(XNamespace.Xmlns + "xs", "http://www.w3.org/2001/XMLSchema"),
-                new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                    companyList.Select(p => new XElement("Контрагенты",
-                    new XAttribute("ИдКонтр", i++),
-                    new XAttribute("П000000000007", p.Name),
-                    GetCompanyElement(p))
-                    )
-
-
-
+                new XAttribute("ДатаДок", DateTime.Now.ToShortDateString()),
+                new XAttribute("ВерсФорм", "4.20"),
+                new XAttribute("Декларант", "1C"),
+                    new XElement("Документ")
                 )
             );
             xdoc.Save(filename);
         }
-
-
 
     }
 }

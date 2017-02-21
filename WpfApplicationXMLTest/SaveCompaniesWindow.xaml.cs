@@ -23,5 +23,12 @@ namespace Rar.ViewWpf
             InitializeComponent();
            
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //Rar.ViewModel.RarViewModel vm = DataContext as Rar.ViewModel.RarViewModel;
+            //vm.SaveCompaniesFileCommand;
+
+        }
     }
 }
