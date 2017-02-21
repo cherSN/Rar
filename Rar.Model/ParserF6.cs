@@ -366,17 +366,48 @@ namespace Rar.Model
 
         public static void SaveTurnoverData(List<RarTurnoverData> turnoverList, string filename)
         {
+
             XDocument xdoc = new XDocument(
                 new XDeclaration("1.0", "windows-1251", "yes"),
                 new XElement("Справочники",
                 new XAttribute("ДатаДок", DateTime.Now.ToShortDateString()),
                 new XAttribute("ВерсФорм", "4.20"),
                 new XAttribute("Декларант", "1C"),
-                    new XElement("Документ")
+                        GetAlcoCodes(turnoverList)
                 )
             );
             xdoc.Save(filename);
         }
 
+        private static XElement GetAlcoCodes(List<RarTurnoverData> turnoverList)
+        {
+            int i = 1;
+
+            List<string> alcoCodeList = turnoverList.Select(a => a.AlcoCode).Distinct().ToList();
+
+            XElement el = new XElement("Документ", alcoCodeList.Select(p => new XElement("Оборот",
+                new XAttribute("ПN", i++),
+                new XAttribute("П000000000003", p)
+                ))
+                );
+
+            return el;
+        }
+
+        private static XElement GetManufacturList(List<RarTurnoverData> turnoverList, string alcoCode)
+        {
+
+            List<RarTurnoverData> cutTurnoverList = turnoverList.Where(s => s.AlcoCode == alcoCode).ToList();
+            List<RarCompany> manufacturList = cutTurnoverList.Select(a => a.Manufacturer).Distinct().ToList();
+
+            XElement el = new XElement("СведПроизвИмпорт", manufacturList.Select(p => new XElement("cc",
+                    new XAttribute("NameOrg", p.Name),
+                    new XAttribute("INN", p.INN),
+                    new XAttribute("KPP", p.KPP)
+                    ))
+                    );
+
+            return null;
+        }
     }
 }
