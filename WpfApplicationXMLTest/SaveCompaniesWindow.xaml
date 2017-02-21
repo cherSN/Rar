@@ -14,10 +14,10 @@
 
         <DataGrid ItemsSource="{Binding SavingCompaniesList, Mode=TwoWay}" Grid.Row="0" AutoGenerateColumns="False" CanUserAddRows="False" >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Имя"  MinWidth="60"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Имя"  MinWidth="160"/>
                 <DataGridTextColumn Binding="{Binding INN}" Header="ИНН"  MinWidth="60"/>
                 <DataGridTextColumn Binding="{Binding KPP}" Header="КПП"  MinWidth="60"/>
-                <DataGridTextColumn Binding="{Binding CounryID}" Header="Код страны"  MinWidth="60"/>
+                <DataGridTextColumn Binding="{Binding CounryID}" Header="Код страны"  MinWidth="80"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Row="1" Content="Сохранить" HorizontalAlignment="Right" Command="{Binding SaveCompaniesFileCommand}"

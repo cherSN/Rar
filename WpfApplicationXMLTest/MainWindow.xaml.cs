@@ -84,7 +84,6 @@ namespace Rar.ViewWpf
             vm.InitializeCompaniesList();
             SaveCompaniesWindow saveCompaniesView = new SaveCompaniesWindow { DataContext=vm};
             saveCompaniesView.Show();
-            
         }
     }
 

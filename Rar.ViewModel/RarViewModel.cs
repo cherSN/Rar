@@ -231,12 +231,36 @@ namespace Rar.ViewModel
         }
         #endregion
 
+        private bool IsInnValid(string inn)
+        {
+            return true;
+        }
+        private bool IsKppValid(string inn)
+        {
+            return true;
+        }
+
         public void InitializeCompaniesList()
         {
             List<RarCompany> companiesList = TurnoverDataList.Where(s => s.Buyer == SelectedBuyer).Select(p => p.Manufacturer).Distinct().ToList();
+            foreach (RarCompany company in companiesList)
+            {
+                string Inn = company.INN.Trim();
+                string Kpp = company.KPP.Trim();
+                if ((Inn.Length != 10) || (Kpp.Length != 9)) continue;
+                if (IsInnValid(Inn)&&IsKppValid(Kpp))
+                {
+                    company.CounryID = "643";
+                }
+
+
+            }
             SavingCompaniesList = new ObservableCollection<RarCompany>(companiesList);
 
         }
+
+
+
 
         #region - Commands -
         private RelayCommand _openFileCommand;

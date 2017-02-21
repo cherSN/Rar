@@ -305,12 +305,37 @@ namespace Rar.Model
             }
         }
 
+        private static XElement GetAdressElement(RarAdress adress)
+        {
+            XElement el = new XElement("П000000000008",
+                new XElement("КодСтраны","643"),
+                new XElement("Индекс", ""),
+                new XElement("КодРегион", "77"),
+                new XElement("Район", adress.District),
+                new XElement("Город", adress.City),
+                new XElement("НаселПункт", adress.Locality),
+                new XElement("Улица", adress.Street),
+                new XElement("Дом", adress.Building),
+                new XElement("Корпус", adress.Block),
+                new XElement("Литера", adress.Litera),
+                new XElement("Кварт", adress.Apartment)
+                );
+
+            return el;
+        }
 
         private static XElement GetCompanyElement(RarCompany company)
         {
             if ((company.CounryID == null)||(company.CounryID =="643"))
             {
-                XElement domestic = new XElement("Резидент");
+                XElement domestic = new XElement("Резидент",
+                    GetAdressElement(company.Adress),
+                    new XElement("ЮЛ",
+                        new XAttribute("П000000000009", company.INN),
+                        new XAttribute("П000000000010", company.KPP)),
+                    new XElement("Производитель", new XAttribute("value", "True")),
+                    new XElement("Перевозчик", new XAttribute("value", "False"))
+                    );
             return domestic;
             }
 
