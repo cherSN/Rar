@@ -331,8 +331,8 @@ namespace Rar.Model
                 XElement domestic = new XElement("Резидент",
                     GetAdressElement(company.Adress),
                     new XElement("ЮЛ",
-                        new XAttribute("П000000000009", company.INN),
-                        new XAttribute("П000000000010", company.KPP)),
+                        new XAttribute("П000000000009", company.INN==null ? "" : company.INN),
+                        new XAttribute("П000000000010", company.KPP==null ? "" : company.KPP)),
                     new XElement("Производитель", new XAttribute("value", "True")),
                     new XElement("Перевозчик", new XAttribute("value", "False"))
                     );

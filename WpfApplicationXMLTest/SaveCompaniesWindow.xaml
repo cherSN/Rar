@@ -22,8 +22,8 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="1" Content="Сохранить" HorizontalAlignment="Right" 
-                VerticalAlignment="Bottom" Command="{Binding SaveCompaniesFileCommand}" />
+        <!--<Button Grid.Row="1" Content="Сохранить" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding SaveCompaniesFileCommand}" />-->
+        <Button Grid.Row="1" Content="Сохранить" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click" />
 
     </Grid>
 </Window>

@@ -245,8 +245,8 @@ namespace Rar.ViewModel
             List<RarCompany> companiesList = TurnoverDataList.Where(s => s.Buyer == SelectedBuyer).Select(p => p.Manufacturer).Distinct().ToList();
             foreach (RarCompany company in companiesList)
             {
-                string Inn = company.INN.Trim();
-                string Kpp = company.KPP.Trim();
+                string Inn = company.INN==null ? "" :  company.INN.Trim();
+                string Kpp = company.KPP==null ? "" :  company.KPP.Trim();
                 if ((Inn.Length != 10) || (Kpp.Length != 9)) continue;
                 if (IsInnValid(Inn)&&IsKppValid(Kpp))
                 {
@@ -373,9 +373,6 @@ namespace Rar.ViewModel
                 return _saveTurnoverFileCommand;
             }
         }
-
-
-
         private void SaveTurnoverFile()
         {
 
@@ -389,7 +386,6 @@ namespace Rar.ViewModel
                 ParserF6.SaveTurnoverData(TurnoverList, saveFileDialog.FileName);
 
         }
-
         public bool CanSaveTurnoverFile()
         {
             return true;
